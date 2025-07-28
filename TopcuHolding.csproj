@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\ContactFormModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Controllers\CompanyController.cshtml" />
   </ItemGroup>
 
@@ -44,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Models\ContactFormModel.cs" />
     <None Include="wwwroot\assets\vendor\simple-line-icons\node_modules\less\bin\lessc" />
     <None Include="wwwroot\assets\vendor\simple-line-icons\node_modules\less\dist\less.js" />
     <None Include="wwwroot\assets\vendor\simple-line-icons\node_modules\less\dist\less.min.js" />
