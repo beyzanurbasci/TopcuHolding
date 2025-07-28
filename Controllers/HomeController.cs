@@ -1,10 +1,10 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TopcuHolding.Models;
-using TopcuHolding.Route;
+using TopcuHolding.Route; // Route dosyan doðru klasördeyse
 
-
-namespace TopcuHolding2.Controllers
+namespace TopcuHolding.Controllers // NOT: Burada proje adýn neyse onunla eþleþmeli!
 {
     public class HomeController : Controller
     {
@@ -14,11 +14,29 @@ namespace TopcuHolding2.Controllers
         {
             _logger = logger;
         }
+
         [Route(Routes.Home.Index)]
         public IActionResult Index()
         {
+            var cookieConsent = Request.Cookies["cookieConsent"];
+
+            if (cookieConsent == "true")
+            {
+                ViewBag.AnalyticsEnabled = true;
+            }
+            else
+            {
+                ViewBag.AnalyticsEnabled = false;
+            }
+
             return View();
         }
+        [Route("cerezler-politikalar")]
+        public IActionResult CookiePolicy()
+        {
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {
@@ -30,5 +48,6 @@ namespace TopcuHolding2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

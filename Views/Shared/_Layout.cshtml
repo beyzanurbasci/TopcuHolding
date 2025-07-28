@@ -1,8 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
-
-	<!-- Basic -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -16,14 +14,11 @@
 	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 	<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
-	<!-- Mobile Metas -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-
-	<!-- Web Fonts & CSS -->
+	<!-- CSS -->
 	<partial name="_LayoutCssPartial" />
-	@RenderSection("PageSpecificCss", required: false) @*spesifik css kullanımı için*@
-
+	@RenderSection("PageSpecificCss", required: false)
 </head>
+
 <body data-plugin-scroll-spy data-plugin-options="{'target': '#sidebar'}">
 	<style>
 		.nav-link.active {
@@ -34,13 +29,65 @@
 
 	<div class="body">
 		<partial name="Header/_HeaderPartial" />
-
 		@RenderBody()
-
 		<partial name="Footer/_FooterPartial" />
 	</div>
-	@RenderSection("Scripts", required: false) @*spesifik css kullanımı için*@
 
+	<!-- Çerez Banner'ı -->
+	<div id="cookieConsent" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#222; color:white; padding:20px; z-index:9999;">
+		<div class="container d-flex justify-content-between align-items-center">
+			<div>
+				Bu web sitesi çerezleri kullanmaktadır. Daha fazla bilgi için <a href="/kvkk" style="color: #ccc;">KVKK Politikamıza</a> göz atabilirsiniz.
+			</div>
+			<div>
+				<button id="acceptCookies" class="btn btn-success btn-sm me-2">Kabul Et</button>
+				<button id="declineCookies" class="btn btn-danger btn-sm">Reddet</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Script: Çerez Onay ve GA -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var cookieConsent = document.getElementById("cookieConsent");
+			var cookiesAccepted = localStorage.getItem("cookiesAccepted");
+
+			if (!cookiesAccepted) {
+				cookieConsent.style.display = "block";
+			}
+
+			document.getElementById("acceptCookies").addEventListener("click", function () {
+				localStorage.setItem("cookiesAccepted", "true");
+				cookieConsent.style.display = "none";
+
+				fetch("/cookie/set"); // Server'a istek gönder
+
+				// GA script'i yükle
+				var ga = document.createElement('script');
+				ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX'; // GA-ID'yi değiştir
+				document.head.appendChild(ga);
+
+				ga.onload = function () {
+					window.dataLayer = window.dataLayer || [];
+					function gtag() { dataLayer.push(arguments); }
+					gtag('js', new Date());
+					gtag('config', 'G-XXXXXXX');
+				};
+			});
+
+			document.getElementById("declineCookies").addEventListener("click", function () {
+				localStorage.setItem("cookiesAccepted", "false");
+				cookieConsent.style.display = "none";
+			});
+		});
+	</script>
+
+	@await Html.PartialAsync("_CookieConsentPartial")
+
+	<!-- Sayfa Özel Script -->
+	@RenderSection("Scripts", required: false)
+
+	<!-- Ortak JS -->
 	<partial name="_LayoutJsPartial" />
 </body>
 </html>

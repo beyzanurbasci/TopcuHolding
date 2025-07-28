@@ -53,16 +53,21 @@ namespace TopcuHolding.Route
 
         public static class Contact
         {
-            public const string Index = "/iletişim";
+            public const string Index = "/iletisim";
         }
 
         public static class HumanResources
         {
             public const string Index = "/insankaynakları";
         }
-       
 
-    
+        public static class CookieRoutes
+        {
+            public const string Index = "cerezler";
+            public const string Consent = "cerezler/consent";
+            public const string CookiePolicy = "cerezler/cerezpolitikasi";
+        }
+
     }
 }
 

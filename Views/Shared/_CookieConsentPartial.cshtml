@@ -1,0 +1,106 @@
+﻿@* @if (Context.Request.Cookies["cookieConsent"] != "true" && Context.Request.Cookies["cookieConsent"] != "false")
+{
+    <div id="cookie-banner" style="position:fixed; bottom:0; width:100%; background:#f9f9f9; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); color:#222; padding:20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; z-index:9999;">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-3 mb-md-0" style="max-width: 70%;">
+                <h5 style="font-weight:bold; margin-bottom:10px;">Çerez Politikası</h5>
+                <p style="margin-bottom: 5px; font-size: 0.9rem; color:#555;">
+                    Web sitemizden en iyi şekilde faydalanabilmeniz için çerezler kullanılmaktadır. Bu siteye giriş yaparak çerez kullanımını kabul etmiş sayılıyorsunuz.
+                    Daha fazla bilgi için lütfen aşağıdaki linke tıklayınız.
+                </p>
+                <a asp-controller="Cookie" asp-action="CookiePolicy" style="text-decoration: underline; color:#007bff;" target="_blank" rel="noopener noreferrer">
+                    Reis Makina A.Ş. İnternet Çerez (Cookie) Aydınlatma Politikası
+                </a>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" onclick="acceptCookies()" style="min-width: 100px;">Anladım</button>
+                <button class="btn btn-outline-secondary" onclick="openPreferences()" style="min-width: 120px;">Çerez Tercihleri</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function acceptCookies() {
+            // Tarayıcı çerezine kullanıcı onay verdi bilgisi yazılır
+            var expires = new Date();
+            expires.setFullYear(expires.getFullYear() + 1);
+            document.cookie = "cookieConsent=true; path=/; expires=" + expires.toUTCString() + "; SameSite=Strict";
+
+            // Banner kapatılır
+            document.getElementById('cookie-banner').style.display = 'none';
+
+            // İsteğe bağlı: sayfayı yenileyebiliriz
+            // location.reload();
+        }
+
+        function openPreferences() {
+            alert("Çerez tercihleri sayfası henüz aktif değil.");
+        }
+    </script>
+}
+ *@
+<!-- Çerez Banneri -->
+<div id="cookieBanner" class="cookie-banner" style="position: fixed; bottom: 0; width: 100%; background-color: #eee; padding: 15px; text-align: center; z-index: 1050;">
+    Bu web sitesi, kullanıcı deneyimini iyileştirmek için çerezleri kullanır.
+    <button id="acceptCookies" class="btn btn-primary btn-sm ms-2">Kabul Et</button>
+    <button id="cookiePreferences" class="btn btn-outline-secondary btn-sm ms-2">Çerez Tercihleri</button>
+</div>
+
+<!-- Çerez Tercihleri Modalı -->
+<div class="modal fade" id="cookieModal" tabindex="-1" aria-labelledby="cookieModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Çerez Tercihleri</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bu web sitesi, kullanıcı deneyimini iyileştirmek ve analiz amacıyla çerezler kullanır.</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="necessaryCookies" checked disabled>
+                    <label class="form-check-label" for="necessaryCookies">Zorunlu Çerezler</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="analyticsCookies">
+                    <label class="form-check-label" for="analyticsCookies">Analitik Çerezler</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="marketingCookies">
+                    <label class="form-check-label" for="marketingCookies">Pazarlama Çerezleri</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveCookieSettings" class="btn btn-primary">Kaydet</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("cookiePreferences").addEventListener("click", function () {
+            var modal = new bootstrap.Modal(document.getElementById("cookieModal"));
+            modal.show();
+        });
+
+        document.getElementById("acceptCookies").addEventListener("click", function () {
+            fetch('/cookie/set?consent=true', { method: 'POST' })
+                .then(() => {
+                    document.getElementById("cookieBanner").style.display = "none";
+                });
+        });
+
+        document.getElementById("saveCookieSettings").addEventListener("click", function () {
+            const analytics = document.getElementById("analyticsCookies").checked;
+            const marketing = document.getElementById("marketingCookies").checked;
+
+            fetch(`/cookie/set?analytics=${analytics}&marketing=${marketing}`, { method: 'POST' })
+                .then(() => {
+                    document.getElementById("cookieBanner").style.display = "none";
+                    var modal = bootstrap.Modal.getInstance(document.getElementById("cookieModal"));
+                    modal.hide();
+                });
+        });
+    </script>
+}
