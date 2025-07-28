@@ -1,0 +1,151 @@
+﻿.page-main .form-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.page-main .form-header {
+    /*                 background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+         */
+    background: var(--primary);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+    .page-main .form-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-main .form-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+.page-main .form-body {
+    padding: 2rem;
+}
+
+.page-main .form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+    .page-main .form-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+.page-main .section-title {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-main .form-label {
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.page-main .form-control, .form-select {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+    .page-main .form-control:focus, .form-select:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    }
+
+.page-main .btn-primary {
+    /*                 background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+         */
+    /*border: none;*/
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+    .page-main .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    }
+
+.page-main .file-upload-area {
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .page-main .file-upload-area:hover {
+        border-color: var(--secondary);
+        background-color: #f8fafc;
+    }
+
+    .page-main .file-upload-area i {
+        font-size: 2rem;
+        color: var(--secondary);
+        margin-bottom: 1rem;
+    }
+
+@media (max-width: 768px) {
+    .page-main .form-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-main .form-body {
+        padding: 1.5rem;
+    }
+}
+
+.page-main .required {
+    color: #ef4444;
+}
+
+.experience-item, .reference-item, .certificate-item {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.add-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .add-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        color: white;
+    }

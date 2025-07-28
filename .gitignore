@@ -1,0 +1,30 @@
+## Visual Studio
+.vs/
+*.user
+*.suo
+
+## Build output
+bin/
+obj/
+*.dll
+*.exe
+
+## Logs
+*.log
+
+## Database
+*.db
+*.mdf
+*.ldf
+
+## Node
+node_modules/
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Video (spesifik dosya)
+wwwroot/assets/NewFolder/REIS_MAKINA_TANITIM_MASTER_SON_REV.mp4
+
+.mp4

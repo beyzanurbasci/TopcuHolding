@@ -1,0 +1,53 @@
+﻿<div class="col-lg-4 order-lg-1 position-relative">
+    @{
+        string TrimSlash(string path) => path.TrimEnd('/');
+        var currentPath = TrimSlash(Context.Request.Path.ToString().ToLower());
+    }
+    <aside class="sidebar" id="sidebar" data-plugin-sticky data-plugin-options="{'minWidth': 991, 'containerSelector': '.container', 'padding': {'top': 110}}">
+        <ul class="nav list flex-column text-3-5 font-weight-medium mb-5-5">
+
+            <li class="nav-item border border-color-grey-1 border-top-0 border-end-0 border-start-0 mb-0">
+                <a class="nav-link text-color-dark text-color-hover-primary py-3 ps-0 @(currentPath == Routes.Corporate.About.ToLower() ? "active" : "")" href="@Routes.Corporate.About">
+                    <i class="fas fa-chevron-right text-1 position-relative top-1 pe-3-5"></i> Hakkımızda
+                </a>
+            </li>
+
+            <li class="nav-item border border-color-grey-1 border-top-0 border-end-0 border-start-0 mb-0">
+                <a class="nav-link text-color-dark text-color-hover-primary py-3 ps-0 @(currentPath == Routes.Corporate.History.ToLower() ? "active" : "")" href="@Routes.Corporate.History">
+                    <i class="fas fa-chevron-right text-1 position-relative top-1 pe-3-5"></i> Tarihçemiz
+                </a>
+            </li>
+
+            <li class="nav-item border border-color-grey-1 border-top-0 border-end-0 border-start-0 mb-0">
+                <a class="nav-link text-color-dark text-color-hover-primary py-3 ps-0 @(currentPath == TrimSlash(Routes.Corporate.MissionandVision.ToLower()) ? "active" : "")" href="@Routes.Corporate.MissionandVision">
+                    <i class="fas fa-chevron-right text-1 position-relative top-1 pe-3-5"></i> Misyonumuz ve Vizyonumuz
+                </a>
+            </li>
+
+            <li class="nav-item border border-color-grey-1 border-top-0 border-end-0 border-start-0 mb-0">
+                <a class="nav-link text-color-dark text-color-hover-primary py-3 ps-0 @(currentPath == Routes.Corporate.OurValues.ToLower() ? "active" : "")" href="@Routes.Corporate.OurValues">
+                    <i class="fas fa-chevron-right text-1 position-relative top-1 pe-3-5"></i> Değerlerimiz
+                </a>
+            </li>
+
+            <li class="nav-item border border-color-grey-1 border-top-0 border-end-0 border-start-0 mb-0">
+                <a class="nav-link text-color-dark text-color-hover-primary py-3 ps-0 @(currentPath == Routes.Corporate.BoardOfManagement.ToLower() ? "active" : "")" href="@Routes.Corporate.BoardOfManagement">
+                    <i class="fas fa-chevron-right text-1 position-relative top-1 pe-3-5"></i> Yönetim Kurulu
+                </a>
+            </li>
+
+            <li class="nav-item border border-color-grey-1 border-top-0 border-end-0 border-start-0 mb-0">
+                <a class="nav-link text-color-dark text-color-hover-primary py-3 ps-0 @(currentPath == Routes.Corporate.ManagerMessage.ToLower() ? "active" : "")" href="@Routes.Corporate.ManagerMessage">
+                    <i class="fas fa-chevron-right text-1 position-relative top-1 pe-3-5"></i> Başkanın Mesajı
+                </a>
+            </li>
+
+            <li class="nav-item border border-color-grey-1 border-top-0 border-end-0 border-start-0 mb-0">
+                <a class="nav-link text-color-dark text-color-hover-primary py-3 ps-0 @(currentPath == Routes.Corporate.GeneralManagerMessage.ToLower() ? "active" : "")" href="@Routes.Corporate.GeneralManagerMessage">
+                    <i class="fas fa-chevron-right text-1 position-relative top-1 pe-3-5"></i> Genel Müdürün Mesajı
+                </a>
+            </li>
+
+        </ul>
+    </aside>
+</div>

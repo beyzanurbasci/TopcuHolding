@@ -1,0 +1,600 @@
+﻿@* 
+
+ *@
+ @model CareerForm
+
+
+@section PageSpecificCss {
+    <link href="~/assets/css/careerforrm.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/assets/js/careerformrules.js"></script>
+}
+
+<section class="section section-height-3 border-0 m-0">
+    <div class="container position-relative pt-5 pb-5-5 mt-5 mb-5">
+        <div class="row justify-content-end pt-1 mt-lg-5">
+            <div class="col-7 col-md-5 position-relative">
+                <ul class="breadcrumb d-block ps-2 appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="200">
+                   
+                    <li class="active"></li>
+                </ul>
+                <h1 class="position-absolute top-100 start-0 text-color-light font-weight-bold text-6 line-height-3 text-end mt-5-5" style="z-index: 1;">
+                    <span class="d-block position-relative z-index-1 pb-5 ps-lg-3 appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="800">İnsan Kaynakları</span>
+                    <span class="custom-svg-position-1 custom-svg-position-1-variation" style="pointer-events: none; z-index: 0;">
+                        <svg class="svg-fill-color-dark mt-1 appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 859.45 88.44" xml:space="preserve" preserveAspectRatio="none">
+                        <polyline points="7.27,84.78 855.17,84.78 855.17,4.79 84.74,4.79 " />
+                            </svg>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="page-main">
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-12">
+                <div class="card shadow-lg" style="border: none; border-radius: 15px;">
+                    <div class="card-header text-center" style=" color: white; border-radius: 15px 15px 0 0;">
+                        <img alt="Topcu Holding" height="50"  src="~/assets/newfolder/topçu holding logo 2.png">
+
+                        <h2 class="mb-0">
+                            <i class="me-2"></i>
+                            İş/Staj Başvuru Formu
+                        </h2>
+
+                    </div>
+
+                    <div style="" class="card-body p-4">
+                        <form id="applicationForm">
+                            <!-- Kişisel Bilgiler -->
+                            <div class="form-section mb-4">
+                                <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px;">
+                                    <i class="fas fa-user me-2"></i>
+                                    KİŞİSEL BİLGİLER
+                                </h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label fw-bold">Ad <span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="firstName" required>
+                                        <div class="invalid-feedback" id="firstNameError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label fw-bold">Soyad <span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="lastName" required>
+                                        <div class="invalid-feedback" id="lastNameError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label fw-bold">E-posta <span style="color: red;">*</span></label>
+                                        <input type="email" class="form-control" id="email" required>
+                                        <div class="invalid-feedback" id="emailError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="phone" class="form-label fw-bold">Telefon <span style="color: red;">*</span></label>
+                                        <input type="tel" class="form-control" id="phone" placeholder="0555 555 55 55" required>
+                                        <div class="invalid-feedback" id="phoneError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nationality" class="form-label fw-bold">Uyruk <span style="color: red;">*</span></label>
+                                        <select class="form-select" id="nationality" required>
+                                            <option value="">Uyruk Seçiniz</option>
+                                            <option value="tc">T.C. Vatandaşı</option>
+                                            <option value="foreign">Yabancı Uyruklu</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="nationalityError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3" id="identitySection" style="display: none;">
+                                        <label for="identity" class="form-label fw-bold" id="identityLabel">T.C. Kimlik No <span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="identity" placeholder="11111111111">
+                                        <div class="invalid-feedback" id="identityError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="birthDate" class="form-label fw-bold">Doğum Tarihi <span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" id="birthDate" required>
+                                        <div class="invalid-feedback" id="birthDateError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="gender" class="form-label fw-bold">Cinsiyet</label>
+                                        <select class="form-select" id="gender" required>
+                                            <option value="">Seçiniz</option>
+                                            <option value="male">Erkek</option>
+                                            <option value="female">Kadın</option>
+                                            @*  <option value="other">Belirtmek İstemiyorum</option> *@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="city" class="form-label fw-bold">Şehir <span style="color: red;">*</span></label>
+                                        <select class="form-select" id="city" required>
+                                            <option value="">Şehir Seçiniz</option>
+                                            <option value="istanbul">İstanbul</option>
+                                            <option value="ankara">Ankara</option>
+                                            <option value="izmir">İzmir</option>
+                                            <option value="bursa">Bursa</option>
+                                            <option value="antalya">Antalya</option>
+                                            <option value="konya">Konya</option>
+                                            <option value="adana">Adana</option>
+                                            <option value="gaziantep">Gaziantep</option>
+                                            <option value="other">Diğer</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="cityError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="maritalStatus" class="form-label fw-bold">Medeni Durum</label>
+                                        <select class="form-select" id="maritalStatus" required>
+                                            <option value="">Seçiniz</option>
+                                            <option value="single">Bekar</option>
+                                            <option value="married">Evli</option>
+                                            @* <option value="divorced">Boşanmış</option>
+                                            <option value="widowed">Dul</option> *@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="address" class="form-label fw-bold">Adres</label>
+                                    <textarea class="form-control" id="address" rows="2" placeholder="Tam adresinizi yazınız"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Başvuru Bilgileri -->
+                            <div class="form-section mb-4">
+                                <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px;">
+                                    <i class="fas fa-briefcase me-2"></i>
+                                    BAŞVURU BİLGİLERİ
+                                </h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="applicationType" class="form-label fw-bold">Başvuru Türü <span style="color: red;">*</span></label>
+                                        <select class="form-select" id="applicationType" required>
+                                            <option value="">Seçiniz</option>
+                                            <option value="fulltime">Tam Zamanlı İş</option>
+                                            <option value="parttime">Yarı Zamanlı İş</option>
+                                            <option value="internship">Staj</option>
+                                          
+                                        </select>
+                                        <div class="invalid-feedback" id="applicationTypeError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="department" class="form-label fw-bold">Açık Pozisyonlar <span style="color: red;">*</span></label>
+                                        <select class="form-select" id="department" required>
+                                            <option value="">Departman Seçiniz</option>
+                                            <option value="it">Bilgi Teknolojileri</option>
+                                            <option value="hr">İnsan Kaynakları</option>
+                                            <option value="finance">Finans</option>
+                                            <option value="marketing">Pazarlama</option>
+                                            <option value="sales">Satış</option>
+                                            <option value="operations">Operasyon</option>
+                                            <option value="accounting">Muhasebe</option>
+                                            <option value="other">Diğer</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="departmentError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <label for="position" class="form-label fw-bold">İlgilendiğiniz Pozisyon <span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="position" placeholder="Örn: Frontend Developer, İK Uzmanı" required>
+                                        <div class="invalid-feedback" id="positionError"></div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="workLocation" class="form-label fw-bold">Çalışma Şekli</label>
+                                        <select class="form-select" id="workLocation">
+                                            <option value="">Seçiniz</option>
+                                            <option value="office">Ofiste</option>
+                                            <option value="remote">Uzaktan</option>
+                                            <option value="hybrid">Hibrit</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="expectedSalary" class="form-label fw-bold">Beklenen Maaş (Net TL)</label>
+                                        <input type="text" class="form-control" id="expectedSalary" placeholder="Opsiyonel">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="startDate" class="form-label fw-bold">Başlayabileceğiniz Tarih</label>
+                                        <input type="date" class="form-control" id="startDate">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Eğitim Bilgileri -->
+                            <div class="form-section mb-4">
+                                <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px;">
+                                    <i class="fas fa-graduation-cap me-2"></i>
+                                    EĞİTİM BİLGİLERİ
+                                </h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="education" class="form-label fw-bold">Eğitim Seviyesi <span style="color: red;">*</span></label>
+                                        <select class="form-select" id="education" required>
+                                            <option value="">Seçiniz</option>
+                                            <option value="primary">İlkokul</option>
+                                            <option value="secondary">Ortaokul</option>
+                                            <option value="highschool">Lise</option>
+                                            <option value="associate">Önlisans</option>
+                                            <option value="bachelor">Lisans</option>
+                                            <option value="master">Yüksek Lisans</option>
+                                            <option value="phd">Doktora</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="educationError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="graduationYear" class="form-label fw-bold">Mezuniyet Yılı</label>
+                                        <input type="number" class="form-control" id="graduationYear" min="1950" max="2030">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <label for="university" class="form-label fw-bold">Üniversite/Okul Adı</label>
+                                        <input type="text" class="form-control" id="university" placeholder="Örn: İstanbul Üniversitesi">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="gpa" class="form-label fw-bold">Not Ortalaması</label>
+                                        <input type="number" class="form-control" id="gpa" step="0.01" min="0" max="4" placeholder="4.00 üzerinden">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="major" class="form-label fw-bold">Bölüm/Alan</label>
+                                    <input type="text" class="form-control" id="major" placeholder="Örn: Bilgisayar Mühendisliği">
+                                </div>
+                            </div>
+
+                            <!-- Deneyim ve Yetenekler -->
+                            <div class="form-section mb-4">
+                                <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px;">
+                                    <i class="fas fa-tools me-2"></i>
+                                    DENEYİM VE YETENEKLER
+                                </h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="experience" class="form-label fw-bold">İş Deneyimi <span style="color: red;">*</span></label>
+                                        <select class="form-select" id="experience" required>
+                                            <option value="">Seçiniz</option>
+                                            <option value="0">Deneyimim yok</option>
+                                            <option value="1">1 yıldan az</option>
+                                            <option value="1-3">1-3 yıl</option>
+                                            <option value="3-5">3-5 yıl</option>
+                                            <option value="5-10">5-10 yıl</option>
+                                            <option value="10+">10+ yıl</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="experienceError"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="currentSalary" class="form-label fw-bold">Güncel Maaş (Net TL)</label>
+                                        <input type="text" class="form-control" id="currentSalary" placeholder="Opsiyonel">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="skills" class="form-label fw-bold">Yetenekler ve Beceriler <span style="color: red;">*</span></label>
+                                    <textarea class="form-control" id="skills" rows="3" placeholder="Teknik yetenekler, programlama dilleri, sertifikalar, yabancı dil vs." required></textarea>
+                                    <div class="invalid-feedback" id="skillsError"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="englishLevel" class="form-label fw-bold">İngilizce Seviyesi</label>
+                                        <select class="form-select" id="englishLevel" name="EnglishLevel">
+                                            <option value="">Seçiniz</option>
+                                            <option value="none">Bilmiyorum</option>
+                                            <option value="basic">Temel (A1-A2)</option>
+                                            <option value="intermediate">Orta (B1-B2)</option>
+                                            <option value="advanced">İleri (C1-C2)</option>
+                                            <option value="native">Ana dil seviyesi</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Diğer Diller</label>
+                                        <div id="otherLanguagesContainer">
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" name="OtherLanguages[]" placeholder="Örn: Almanca (B2), Fransızca (A1)">
+                                                <button class="btn btn-outline-danger removeLanguage" type="button">Sil</button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline btn-primary " type="button" id="addLanguageBtn">+ Dil Ekle</button>
+                                    </div>
+                                </div>
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">İş Tecrübesi</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="workExperienceContainer">
+                                            <div class="work-experience-item border p-3 mb-3 rounded">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label fw-bold">Kurum Adı</label>
+                                                        <input type="text" class="form-control" name="WorkExperience[0][Company]" placeholder="Şirket/Kurum adı">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label fw-bold">Pozisyon</label>
+                                                        <input type="text" class="form-control" name="WorkExperience[0][Position]" placeholder="İş unvanı">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3 mb-3">
+                                                        <label class="form-label fw-bold">Başlangıç Ayı</label>
+                                                        <select class="form-select" name="WorkExperience[0][StartMonth]">
+                                                            <option value="">Ay</option>
+                                                            <option value="01">Ocak</option>
+                                                            <option value="02">Şubat</option>
+                                                            <option value="03">Mart</option>
+                                                            <option value="04">Nisan</option>
+                                                            <option value="05">Mayıs</option>
+                                                            <option value="06">Haziran</option>
+                                                            <option value="07">Temmuz</option>
+                                                            <option value="08">Ağustos</option>
+                                                            <option value="09">Eylül</option>
+                                                            <option value="10">Ekim</option>
+                                                            <option value="11">Kasım</option>
+                                                            <option value="12">Aralık</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <label class="form-label fw-bold">Başlangıç Yılı</label>
+                                                        <select class="form-select" name="WorkExperience[0][StartYear]">
+                                                            <option value="">Yıl</option>
+                                                            <script>
+                                                                const currentYear = new Date().getFullYear();
+                                                                for(let year = currentYear; year >= 1980; year--) {
+                                                                    document.write(`<option value="${year}">${year}</option>`);
+                                                                }
+                                                            </script>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <label class="form-label fw-bold">Bitiş Ayı</label>
+                                                        <select class="form-select" name="WorkExperience[0][EndMonth]">
+                                                            <option value="">Ay</option>
+                                                            <option value="current">Halen çalışıyorum</option>
+                                                            <option value="01">Ocak</option>
+                                                            <option value="02">Şubat</option>
+                                                            <option value="03">Mart</option>
+                                                            <option value="04">Nisan</option>
+                                                            <option value="05">Mayıs</option>
+                                                            <option value="06">Haziran</option>
+                                                            <option value="07">Temmuz</option>
+                                                            <option value="08">Ağustos</option>
+                                                            <option value="09">Eylül</option>
+                                                            <option value="10">Ekim</option>
+                                                            <option value="11">Kasım</option>
+                                                            <option value="12">Aralık</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <label class="form-label fw-bold">Bitiş Yılı</label>
+                                                        <select class="form-select" name="WorkExperience[0][EndYear]">
+                                                            <option value="">Yıl</option>
+                                                            <script>
+                                                                for(let year = currentYear; year >= 1980; year--) {
+                                                                    document.write(`<option value="${year}">${year}</option>`);
+                                                                }
+                                                            </script>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">İş Tanımı</label>
+                                                    <textarea class="form-control" name="WorkExperience[0][Description]" rows="3" placeholder="Görev ve sorumluluklarınızı kısaca açıklayın"></textarea>
+                                                </div>
+                                                <button class="btn btn-outline-danger removeWorkExperience" type="button">Bu Tecrübeyi Sil</button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-primary" type="button" id="addWorkExperienceBtn">+ İş Tecrübesi Ekle</button>
+                                    </div>
+                                </div>
+
+                                <!-- Referanslar Bölümü -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Referanslar</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="referencesContainer">
+                                            <div class="reference-item border p-3 mb-3 rounded">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label fw-bold">Ad Soyad</label>
+                                                        <input type="text" class="form-control" name="References[0][Name]" placeholder="Referans kişinin adı soyadı">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label fw-bold">Pozisyon</label>
+                                                        <input type="text" class="form-control" name="References[0][Position]" placeholder="Unvanı/Pozisyonu">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label fw-bold">Şirket/Kurum</label>
+                                                        <input type="text" class="form-control" name="References[0][Company]" placeholder="Çalıştığı kurum">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label fw-bold">Telefon</label>
+                                                        <input type="tel" class="form-control" name="References[0][Phone]" placeholder="İletişim numarası">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">E-posta</label>
+                                                    <input type="email" class="form-control" name="References[0][Email]" placeholder="E-posta adresi">
+                                                </div>
+                                                <button class="btn btn-outline-danger removeReference" type="button">Bu Referansı Sil</button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-primary" type="button" id="addReferenceBtn">+ Referans Ekle</button>
+                                    </div>
+                                </div>
+
+                                <!-- Sertifikalar Bölümü -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Sertifikalar</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="certificatesContainer">
+                                            <div class="certificate-item border p-3 mb-3 rounded">
+                                                <div class="row">
+                                                    <div class="col-md-8 mb-3">
+                                                        <label class="form-label fw-bold">Sertifika Adı</label>
+                                                        <input type="text" class="form-control" name="Certificates[0][Name]" placeholder="Sertifika/Kurs adı">
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label class="form-label fw-bold">Alındığı Yıl</label>
+                                                        <select class="form-select" name="Certificates[0][Year]">
+                                                            <option value="">Yıl seçin</option>
+                                                            <script>
+                                                                for(let year = currentYear; year >= 1980; year--) {
+                                                                    document.write(`<option value="${year}">${year}</option>`);
+                                                                }
+                                                            </script>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8 mb-3">
+                                                        <label class="form-label fw-bold">Veren Kurum</label>
+                                                        <input type="text" class="form-control" name="Certificates[0][Institution]" placeholder="Sertifikayı veren kurum/kuruluş">
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label class="form-label fw-bold">Geçerlilik</label>
+                                                        <select class="form-select" name="Certificates[0][Validity]">
+                                                            <option value="">Seçiniz</option>
+                                                            <option value="lifetime">Süresiz</option>
+                                                            <option value="1year">1 Yıl</option>
+                                                            <option value="2years">2 Yıl</option>
+                                                            <option value="3years">3 Yıl</option>
+                                                            <option value="5years">5 Yıl</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-outline-danger removeCertificate" type="button">Bu Sertifikayı Sil</button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-primary" type="button" id="addCertificateBtn">+ Sertifika Ekle</button>
+                                    </div>
+                                </div>
+
+                                <!-- Dosya Yükleme -->
+                                <div class="form-section mb-4">
+                                    <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px;">
+                                        <i class="fas fa-file-upload me-2"></i>
+                                        BELGELER
+                                    </h3>
+
+                                    <div class="mb-3">
+                                        <label for="cv" class="form-label fw-bold">CV Dosyası (PDF, DOC, DOCX) <span style="color: red;">*</span></label>
+                                        <div class="border rounded p-4 text-center" style="background-color: #f8f9fa; cursor: pointer;" onclick="document.getElementById('cv').click()">
+                                            <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+                                            <p class="mb-1">CV dosyanızı yüklemek için tıklayın</p>
+                                            <small class="text-muted">Maksimum 5MB - PDF, DOC, DOCX formatında</small>
+                                            <div id="cvFileName" class="mt-2 text-success" style="display: none;"></div>
+                                        </div>
+                                        <input type="file" class="d-none" id="cv" accept=".pdf,.doc,.docx" required>
+                                        <div class="invalid-feedback" id="cvError"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="coverLetter" class="form-label fw-bold">Ön Yazı / Neden bu pozisyon?</label>
+                                        <textarea class="form-control" id="coverLetter" rows="4" placeholder="Kendinizi tanıtın ve neden bu pozisyon için uygun olduğunuzu açıklayın..."></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="portfolio" class="form-label fw-bold">Portföy/LinkedIn Linki</label>
+                                        <input type="url" class="form-control" id="portfolio" placeholder="https://linkedin.com/in/kullanici-adi">
+                                    </div>
+                                </div>
+
+                                <!-- Onay Bölümü -->
+                                <div class="form-section mb-4">
+                                    <div class="card" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                                        <div class="card-body">
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="consent" required>
+                                                <label class="form-check-label" for="consent">
+                                                    <strong>Kişisel verilerimin işlenmesine ve KVKK kapsamında değerlendirilmesine onay veriyorum.</strong> <span style="color: red;">*</span>
+                                                </label>
+                                                <div class="invalid-feedback" id="consentError"></div>
+                                            </div>
+
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="marketing">
+                                                <label class="form-check-label" for="marketing">
+                                                    Topçu Holding'den iş fırsatları ve etkinlikler hakkında bilgilendirme e-postaları almak istiyorum.
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" id="accuracy" required>
+                                                <label class="form-check-label" for="accuracy">
+                                                    <strong>Verdiğim bilgilerin doğru ve eksiksiz olduğunu beyan ederim.</strong> <span style="color: red;">*</span>
+                                                </label>
+                                                <div class="invalid-feedback" id="accuracyError"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 50px;">
+                                        <i class="fas fa-paper-plane me-2"></i>
+                                        Başvurumu Gönder
+                                    </button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h5 class="modal-title">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Başvuru Başarılı
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    <h4 class="mt-3">Teşekkür Ederiz!</h4>
+                    <p>Başvurunuz başarıyla alınmıştır. En kısa sürede size dönüş yapacağız.</p>
+                    <p><strong>Başvuru Referans No:</strong> <span id="referenceNumber"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tamam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+  
+
+</div>

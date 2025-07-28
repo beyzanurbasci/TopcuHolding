@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewData["Title"] = "Yönetim Kurulu"; // veya Hakkımızda, Grup Şirketleri vs.
+}
+
+<div role="main" class="main">
+
+    <section class="section section-height-3 border-0 m-0"
+             style="background-image:url('@Url.Content("~/assets/NewFolder/yonetim.png")'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class="container position-relative pt-5 pb-5-5 mt-5 mb-5">
+            <div class="row justify-content-end pt-1 mt-lg-5">
+                <div class="col-7 col-md-5 position-relative">
+                    <ul class="breadcrumb d-block ps-2 appear-animation"
+                        data-appear-animation="fadeInLeftShorterPlus"
+                        data-appear-animation-delay="200">
+                        <li class="active">Aktif Sayfa</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="container custom-margin-1">
+        <div class="row gy-5 gy-lg-0">
+            <div class="col-lg-8 order-lg-2 mt-0 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1200">
+
+                <div id="Yönetim Kurulu" class="row">
+
+                    <!-- ÜST YÖNETİM -->
+                    <h2 class="text-center text-color-dark font-weight-bold mb-4">Üst Yönetim</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-md-5 mb-4 text-center">
+                            <img src="~/assets/newfolder/1517374650741 (1).jpeg" class="img-fluid rounded mb-2" alt="Dursun TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Dursun TOPÇU</h5>
+                            <p>Yönetim Kurulu Başkanı</p>
+                        </div>
+                        <div class="col-md-5 mb-4 text-center">
+                            <img src="~/assets/newfolder/images.png" class="img-fluid rounded mb-2" alt="Abdullah TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Abdullah TOPÇU</h5>
+                            <p>Yönetim Kurulu Başkan Yardımcısı</p>
+                        </div>
+                    </div>
+
+                    <!-- YÖNETİM -->
+                    <h2 class="text-center text-color-dark font-weight-bold mt-5 mb-4">Yönetim</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 mb-4 text-center">
+                            <img src="~/assets/newfolder/indir (1).jpeg" class="img-fluid rounded mb-2" alt="Ali Reis TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Ali Reis TOPÇU</h5>
+                            <p>Yönetim Kurulu Üyesi</p>
+                        </div>
+                        <div class="col-md-4 mb-4 text-center">
+                            <img src="~/assets/newfolder/1596912769448.jpeg" class="img-fluid rounded mb-2" alt="Adnan TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Adnan TOPÇU</h5>
+                            <p>Yönetim Kurulu Üyesi</p>
+                        </div>
+                        <div class="col-md-4 mb-4 text-center">
+                            <img src="~/assets/newfolder/images.png" class="img-fluid rounded mb-2" alt="Mustafa TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Mustafa TOPÇU</h5>
+                            <p>Yönetim Kurulu Üyesi</p>
+                        </div>
+                        <div class="col-md-4 mb-4 text-center">
+                            <img src="~/assets/newfolder/images.png" class="img-fluid rounded mb-2" alt="Ömer Faruk TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Ömer Faruk TOPÇU</h5>
+                            <p>Yönetim Kurulu Üyesi</p>
+                        </div>
+                        <div class="col-md-4 mb-4 text-center">
+                            <img src="~/assets/newfolder/1698184068759.jpeg" class="img-fluid rounded mb-2" alt="Mehmet Talha TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Mehmet Talha TOPÇU</h5>
+                            <p>Yönetim Kurulu Üyesi</p>
+                        </div>
+                        <div class="col-md-4 mb-4 text-center">
+                            <img src="~/assets/newfolder/indir (2).jpeg" class="img-fluid rounded mb-2" alt="Muhammet Yusuf TOPÇU" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Muhammet Yusuf TOPÇU</h5>
+                            <p>Yönetim Kurulu Üyesi</p>
+                        </div>
+                    </div>
+
+                    <!-- GENEL MÜDÜR -->
+                    <h2 class="text-center text-color-dark font-weight-bold mt-5 mb-4">Yönetim Kurulu Üyesi ve Şirket Genel Müdürü</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-md-5 mb-4 text-center">
+                            <img src="~/assets/newfolder/indir (3).jpeg" class="img-fluid rounded mb-2" alt="Başar DEMİRCAN" style="object-fit: cover; height: 300px; width: 100%;">
+                            <h5>Başar DEMİRCAN</h5>
+                            <p>Yönetim Kurulu Üyesi ve Şirket Genel Müdürü</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+         
+            <!-- Sidebar -->
+            @await Html.PartialAsync("_CorporateSidebar")
+
+
+        </div>
+    </div>
+</div>

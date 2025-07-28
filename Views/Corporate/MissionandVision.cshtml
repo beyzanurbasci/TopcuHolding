@@ -1,0 +1,68 @@
+﻿@{
+	ViewData["Title"] = "Misyon Ve Vizyon";
+}
+<div role="main" class="main">
+
+	<!-- Sayfa Başlığı -->
+	<section class="section section-height-3 border-0 m-0"
+			 style="background-image:url('@Url.Content("~/assets/NewFolder/misyon.png")'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+		<div class="container position-relative pt-5 pb-5-5 mt-5 mb-5">
+			<div class="row justify-content-end pt-1 mt-lg-5">
+				<div class="col-7 col-md-5 position-relative">
+					<ul class="breadcrumb d-block ps-2 appear-animation"
+						data-appear-animation="fadeInLeftShorterPlus"
+						data-appear-animation-delay="200">
+						<li class="active"></li>
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="container custom-margin-1">
+		<div class="row gy-5 gy-lg-0">
+			<div class="col-lg-8 order-lg-2 mt-0 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1200">
+			
+				<div id="Misyonumuz ve Vizyonumuz" class="row">
+					<div class="col">
+						<h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-4">Misyonumuz ve Vizyonumuz</h2>
+						<div class="tabs tabs-bottom tabs-simple pb-2 mb-5">
+							
+							<div class="tab-content">
+								<div class="tab-pane active" id="tabsMissionVision1">
+									<p class="text-3-5 font-weight-light mb-0">Nitelikli insan kaynağı ile üründe ve hizmette kaliteyi öncüleyen; sektörde en hızlı büyüyen ve uluslararası rekabette güçlü bir firma oluşturmaktır. <span class="highlight highlight-primary highlight-bg-opacity highlight-animated" data-appear-animation="highlight-animated-start" data-appear-animation-delay="1200" data-plugin-options="{'flagClassOnly': true}"> </p>
+								</div>
+								<div class="tab-pane active" id="tabsMissionVision1">
+									<p class="text-3-5 font-weight-light mb-0">
+										Müşterilerimiz, çalışanlarımız, ortaklarımız ve toplum için sürekli yeni değer üreten
+
+										Kaliteli ürünler sunan, güvenilir ve sürekli gelişen,
+
+										Kaynakları verimli kullanabilen,
+
+										İyi bir çalışma ortamında yeteneklerin geliştirildiği, katılımın ve ekip çalışmasının özendirildiği, çalışanlarına değer veren,
+
+										Müşterilerimiz ile kısa süreli değil güvene dayalı, kalıcı ve uzun süreli iş ilişkileri kurmak,
+
+										Toplumsal sorumluluğu ve çevre bilinci yüksek bir kurum olmanın onurunu çok uzun yıllar daha devam ettirmektir. <span class="highlight highlight-primary highlight-bg-opacity highlight-animated" data-appear-animation="highlight-animated-start" data-appear-animation-delay="1200" data-plugin-options="{'flagClassOnly': true}">
+									</p>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+			</div>
+
+			
+			<!-- Sidebar -->
+			@await Html.PartialAsync("_CorporateSidebar")
+
+
+		</div>
+	</div>
+
+</div>

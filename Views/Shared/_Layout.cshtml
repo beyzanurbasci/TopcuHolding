@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+	<!-- Basic -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>@(ViewData["Title"] ?? "Topçu Holding")</title>
+
+	<meta name="keywords" content="Topçu Holding, Endüstriyel Üretim, Yatırım, Jeneratör, Testere Makineleri" />
+	<meta name="description" content="Topçu Holding, sanayi ve üretim alanında faaliyet gösteren kurumsal bir şirkettir.">
+	<meta name="author" content="Topçu IT">
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+	<!-- Mobile Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+	<!-- Web Fonts & CSS -->
+	<partial name="_LayoutCssPartial" />
+	@RenderSection("PageSpecificCss", required: false) @*spesifik css kullanımı için*@
+
+</head>
+<body data-plugin-scroll-spy data-plugin-options="{'target': '#sidebar'}">
+	<style>
+		.nav-link.active {
+			color: #0d47a1 !important;
+			font-weight: bold;
+		}
+	</style>
+
+	<div class="body">
+		<partial name="Header/_HeaderPartial" />
+
+		@RenderBody()
+
+		<partial name="Footer/_FooterPartial" />
+	</div>
+	@RenderSection("Scripts", required: false) @*spesifik css kullanımı için*@
+
+	<partial name="_LayoutJsPartial" />
+</body>
+</html>

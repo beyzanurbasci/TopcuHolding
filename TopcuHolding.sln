@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36212.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopcuHolding", "TopcuHolding.csproj", "{F8D97E35-2FBE-4175-BBB7-C542C21E0413}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8D97E35-2FBE-4175-BBB7-C542C21E0413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8D97E35-2FBE-4175-BBB7-C542C21E0413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8D97E35-2FBE-4175-BBB7-C542C21E0413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8D97E35-2FBE-4175-BBB7-C542C21E0413}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2A44BEA-0D22-448C-A44D-3BA28E9DC781}
+	EndGlobalSection
+EndGlobal

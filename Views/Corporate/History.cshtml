@@ -1,0 +1,52 @@
+﻿
+@{
+
+	ViewData["Title"] = "Tarihçemiz";
+}
+
+<div role="main" class="main">
+
+	<!-- Sayfa Başlığı -->
+	<section class="section section-height-3 border-0 m-0"
+			 style="background-image:url('@Url.Content("~/assets/NewFolder/about.png")'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+		<div class="container position-relative pt-5 pb-5-5 mt-5 mb-5">
+			<div class="row justify-content-end pt-1 mt-lg-5">
+				<div class="col-7 col-md-5 position-relative">
+					<ul class="breadcrumb d-block ps-2 appear-animation"
+						data-appear-animation="fadeInLeftShorterPlus"
+						data-appear-animation-delay="200">
+						<li class="active"></li>
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- İçerik ve Sidebar -->
+	<div class="container custom-margin-1">
+		<div class="row gy-5 gy-lg-0">
+
+			<!-- Ana içerik -->
+			<div class="col-lg-8 order-lg-2 mt-0 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1200">
+				<div id="Tarihçemiz" class="row pb-4-5 mb-5">
+					<div class="col">
+						<h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-4">Tarihçemiz</h2>
+
+						<p class="font-weight-light text-3-5 mb-0">
+							Topçu Holding, Türkiye’nin önde gelen sanayi ve ticaret gruplarından biri olarak faaliyetlerine İstanbul’da başlamıştır. Kuruluşundan itibaren ülke ekonomisine katma değer sağlayacak yatırımlar gerçekleştirmeyi hedefleyen Topçu Holding, özellikle ithalat, ihracat, toptan satış ve endüstriyel üretim alanlarında büyüme göstermiştir.Holding, yerli üretimi destekleyen Ar-Ge yatırımlarıyla dikkat çekerken, aynı zamanda dünyanın dört bir yanından yaklaşık 100’ü aşkın markayı Türkiye pazarına sunarak distribütörlük hizmeti vermektedir. Geniş bayi ağı ve güçlü lojistik altyapısıyla müşterilerine yüksek kaliteli ürünler sunmaktadır.Topçu Holding, üretim gücünü artırmak amacıyla sanayi yatırımlarına yönelmiş ve bu doğrultuda Ozco Metal İşleme Makineleri markasını bünyesine katmıştır. Konya’daki üretim tesislerinde yılda 1.500 metal şerit testere üretimi gerçekleştiren Ozco, 2023 yılında dolar bazında %40 büyüme yakalamış ve üretim kapasitesini %100 artırmıştır. Bu gelişmeler, grubun hem iç piyasadaki gücünü hem de ihracat kapasitesini artırmasını sağlamıştır.Bugün İstanbul (Sancaktepe) ve Konya’da faaliyet gösteren üretim ve yönetim merkezleriyle hizmet veren Topçu Holding, 200–500 arasında değişen uzman çalışan kadrosuyla ülkemizin üretim ve sanayi altyapısına katkıda bulunmayı sürdürmektedir. “Birlikten kuvvet doğar” anlayışıyla hareket eden holding, gelecek nesillere sürdürülebilir ve yenilikçi bir sanayi mirası bırakmayı amaçlamaktadır.
+						</p>
+							
+					</div>
+				</div>
+			</div>
+
+		
+			<!-- Sidebar -->
+			@await Html.PartialAsync("_CorporateSidebar")
+
+
+		</div>
+	</div>
+
+</div>
