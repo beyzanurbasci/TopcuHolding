@@ -1,91 +1,47 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-//using TopcuHolding.Route;
+﻿using Microsoft.AspNetCore.Mvc;
+using TopcuHolding.Models;
+using TopcuHolding.Route;
+using TopcuHolding.Services;
 
 
 
-//namespace TopcuHolding.Controllers
-//{  [Route(Routes.Contact.Index)]
-//    public class ContactController : Controller
-//    {
-
-//        public IActionResult Index()
-//        {
-//            return View();
-//        }
-//    }
-//}
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Mail;
-using System.Net;
-using Newtonsoft.Json;
-
-public class ContactController : Controller
+namespace TopcuHolding.Controllers
 {
-    private readonly IWebHostEnvironment _env;
-    private readonly IConfiguration _config;
 
-    public ContactController(IWebHostEnvironment env, IConfiguration config)
+    public class ContactController : Controller
     {
-        _env = env;
-        _config = config;
-    }
+        private readonly GoogleRecaptchaService _recaptcha;
+        private readonly EmailService _email;
 
-    [HttpGet]
-    public IActionResult Index()
-    {
-        return View(new ContactFormModel());
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> SubmitContactForm([FromBody] ContactFormModel model)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        var isCaptchaValid = await VerifyRecaptcha(model.RecaptchaToken);
-        if (!isCaptchaValid)
-            return BadRequest(new { error = "Geçersiz reCAPTCHA doğrulaması." });
-
-        // 1. Veritabanı kaydı yapılacaksa buraya eklenebilir
-
-        // 2. Email gönderimi
-        var body = $@"
-            <p><strong>Ad Soyad:</strong> {model.Name}</p>
-            <p><strong>Email:</strong> {model.Email}</p>
-            <p><strong>Konu:</strong> {model.Subject}</p>
-            <p><strong>Mesaj:</strong><br />{model.Message}</p>";
-
-        var mailMessage = new MailMessage
+        public ContactController(GoogleRecaptchaService recaptcha, EmailService email)
         {
-            From = new MailAddress("your-email@example.com"),
-            Subject = "İletişim Formu Mesajı",
-            Body = body,
-            IsBodyHtml = true
-        };
-        mailMessage.To.Add("info@topcuholding.com");
+            _recaptcha = recaptcha;
+            _email = email;
+        }
 
-        using var smtp = new SmtpClient("smtp.example.com")
+        [HttpGet]
+        public IActionResult Index() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Index(ContactMessage model)
         {
-            Port = 587,
-            Credentials = new NetworkCredential("your-email@example.com", "your-password"),
-            EnableSsl = true
-        };
+            if (!await _recaptcha.VerifyAsync(model.RecaptchaToken))
+                ModelState.AddModelError("", "reCAPTCHA doğrulaması başarısız.");
 
-        await smtp.SendMailAsync(mailMessage);
+            if (ModelState.IsValid)
+            {
+                var mailBody = $"Ad: {model.Name}\nE-posta: {model.Email}\nMesaj:\n{model.Message}";
+                await _email.SendEmailAsync("Yeni İletişim Mesajı", mailBody);
+                ViewBag.Success = true;
+                ModelState.Clear();
 
-        return Ok(new { success = true, message = "Mesajınız başarıyla gönderildi." });
-    }
+            }
+            else
+            {
+                return View(model); // validation hataları döner
+            }
 
-    private async Task<bool> VerifyRecaptcha(string token)
-    {
-        var secret = _config["Recaptcha:SecretKey"];
-        using var httpClient = new HttpClient();
-        var response = await httpClient.PostAsync(
-            $"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={token}",
-            null);
-
-        var json = await response.Content.ReadAsStringAsync();
-        dynamic result = JsonConvert.DeserializeObject(json);
-        return result.success == true && result.score >= 0.5;
+                return View();
+        }
     }
 }

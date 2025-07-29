@@ -89,6 +89,18 @@
 		</div>
 	</div>
 </footer> *@
+
+@model TopcuHolding.Models.ContactMessage
+@inject IConfiguration Configuration
+@{
+	ViewData["Title"] = "İletişim";
+	var siteKey = Configuration["GoogleReCaptcha:SiteKey"];
+	
+}
+
+
+
+
 <section class="section section-text-light section-background m-0"
 		 style="background-color:var(--primary); background-size: cover;">
 	@*background: url('@Url.Content("~/assets/img/topcu-holding/topcu-holding-cover-1.png")');
@@ -185,7 +197,7 @@
 				<h2 class="font-weight-bold">
 					Bizimle İletişime Geçin
 				</h2>
-				<form class="contact-form custom-contact-form-style-1 form-errors-light" action="php/contact-form.php" method="POST">
+		@* 		<form class="contact-form custom-contact-form-style-1 form-errors-light" action="php/contact-form.php" method="POST">
 					<div class="contact-form-success alert alert-success d-none mt-4">
 						<strong>Success!</strong> Mesajınız bize ulaşmıştır.
 					</div>
@@ -225,7 +237,110 @@
 							<input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" data-loading-text="Yükleniyor...">
 						</div>
 					</div>
+				</form> *@
+				@* *@
+				
+@* 				<form id="contactForm" class="contact-form custom-contact-form-style-1 form-errors-light" asp-controller="Contact" asp-action="Index" method="post">
+					<div class="mb-3">
+						<label class="form-label">İsim:</label>
+						<input id="Name" asp-for="Name" class="form-control" />
+						<span asp-validation-for="Name" class="text-danger" data-valmsg-for="Name"></span>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">E-posta:</label>
+						<input id="Email" asp-for="Email" class="form-control" />
+						<span asp-validation-for="Email" class="text-danger" data-valmsg-for="Email"></span>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Mesajınız:</label>
+						<textarea id="Message" asp-for="Message" class="form-control" rows="5"></textarea>
+						<span asp-validation-for="Message" class="text-danger" data-valmsg-for="Message"></span>
+					</div>
+
+					<input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
+
+					<div class="mb-3">
+						<div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onReCaptchaSuccess"></div>
+						<span class="text-danger">@Html.ValidationMessage("Captcha")</span>
+					</div>
+					<div class="mb-3">
+						<button type="submit" class="btn btn-secondary">Gönder</button>
+					</div>
 				</form>
+ *@
+
+				<form class="contact-form custom-contact-form-style-1 form-errors-light" asp-controller="Contact" asp-action="Index" method="post" onreset="resetErrors()" onsubmit="validateForm()">
+					@* <div class="contact-form-success alert alert-success d-none mt-4">
+						<strong>Başarılı!</strong> Mesajınız bize ulaşmıştır.
+					</div>
+
+					<div class="contact-form-error alert alert-danger d-none mt-4">
+						<strong>Hata!</strong> Mesaj gönderilirken bir hata oluştu.
+						<span class="mail-error-message text-1 d-block"></span>
+					</div> *@
+
+					<input type="hidden" name="subject" value="Mesajınız alınmıştır." />
+					<div class="row">
+						<div class="form-group col">
+							<div class="custom-input-box">
+								<i class="icon-user icons text-color-primary"></i>
+								<input id="name" asp-for="Name" type="text"  data-msg-required="Lütfen isminizi giriniz!" minlength="2" maxlength="100" class="form-control" name="name" placeholder="İsminiz*" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<div class="custom-input-box">
+								<i class="icon-envelope icons text-color-primary"></i>
+								<input id="email" asp-for="Email" type="email"  data-msg-required="Lütfen e-posta adresinizi giriniz! " data-msg-email="Lütfen geçerli bir e-posta adresi giriniz!." maxlength="50" class="form-control" name="email" placeholder="E-posta Adresiniz*" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<div class="custom-input-box">
+								<i class="icon-bubble icons text-color-primary"></i>
+								<textarea id="subject" asp-for="Message" maxlength="500" data-msg-required="Lütfen mesajınızı yazınız!" rows="10" class="form-control" name="message" placeholder="Mesajınız*" required></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<div class="custom-input-box">
+								<input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
+
+								
+									<div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onReCaptchaSuccess"></div>
+									<span class="text-danger">@Html.ValidationMessage("Captcha")</span>
+								
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" data-loading-text="Mesajınız Gönderiliyor...">
+						</div>
+
+						</div>
+
+
+					<div class="row">
+						<div class="form-group col">
+						
+						
+							<div class="contact-form-success alert alert-success d-none mt-4">
+								<strong>Başarılı!</strong> Mesajınız bize ulaşmıştır.
+                                <span class="mail-success-message text-1 d-block"></span>
+							</div>
+
+							
+						</div>
+					</div>
+				</form>
+
+
 			</div>
 		</div>
 
