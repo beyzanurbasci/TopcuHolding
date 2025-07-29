@@ -1,106 +1,175 @@
-﻿@* @if (Context.Request.Cookies["cookieConsent"] != "true" && Context.Request.Cookies["cookieConsent"] != "false")
-{
-    <div id="cookie-banner" style="position:fixed; bottom:0; width:100%; background:#f9f9f9; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); color:#222; padding:20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; z-index:9999;">
-        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <div class="mb-3 mb-md-0" style="max-width: 70%;">
-                <h5 style="font-weight:bold; margin-bottom:10px;">Çerez Politikası</h5>
-                <p style="margin-bottom: 5px; font-size: 0.9rem; color:#555;">
-                    Web sitemizden en iyi şekilde faydalanabilmeniz için çerezler kullanılmaktadır. Bu siteye giriş yaparak çerez kullanımını kabul etmiş sayılıyorsunuz.
-                    Daha fazla bilgi için lütfen aşağıdaki linke tıklayınız.
-                </p>
-                <a asp-controller="Cookie" asp-action="CookiePolicy" style="text-decoration: underline; color:#007bff;" target="_blank" rel="noopener noreferrer">
-                    Reis Makina A.Ş. İnternet Çerez (Cookie) Aydınlatma Politikası
-                </a>
-            </div>
-            <div class="d-flex gap-2">
-                <button class="btn btn-primary" onclick="acceptCookies()" style="min-width: 100px;">Anladım</button>
-                <button class="btn btn-outline-secondary" onclick="openPreferences()" style="min-width: 120px;">Çerez Tercihleri</button>
-            </div>
+﻿<!-- Cookie Consent Banner -->
+<div id="cookie-consent-box" class="cookie-consent-box" style="display: none; opacity: 0;">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 py-3">
+        <div class="text-white small">
+            Bu web sitesi deneyiminizi iyileştirmek için çerezleri kullanır. Tercihlerinizi özelleştirmek için <button id="btn-cookie-settings" class="btn btn-link text-decoration-underline p-0 text-white">çerez ayarları</button> bölümünü ziyaret edebilirsiniz.
         </div>
-    </div>
-
-    <script>
-        function acceptCookies() {
-            // Tarayıcı çerezine kullanıcı onay verdi bilgisi yazılır
-            var expires = new Date();
-            expires.setFullYear(expires.getFullYear() + 1);
-            document.cookie = "cookieConsent=true; path=/; expires=" + expires.toUTCString() + "; SameSite=Strict";
-
-            // Banner kapatılır
-            document.getElementById('cookie-banner').style.display = 'none';
-
-            // İsteğe bağlı: sayfayı yenileyebiliriz
-            // location.reload();
-        }
-
-        function openPreferences() {
-            alert("Çerez tercihleri sayfası henüz aktif değil.");
-        }
-    </script>
-}
- *@
-<!-- Çerez Banneri -->
-<div id="cookieBanner" class="cookie-banner" style="position: fixed; bottom: 0; width: 100%; background-color: #eee; padding: 15px; text-align: center; z-index: 1050;">
-    Bu web sitesi, kullanıcı deneyimini iyileştirmek için çerezleri kullanır.
-    <button id="acceptCookies" class="btn btn-primary btn-sm ms-2">Kabul Et</button>
-    <button id="cookiePreferences" class="btn btn-outline-secondary btn-sm ms-2">Çerez Tercihleri</button>
-</div>
-
-<!-- Çerez Tercihleri Modalı -->
-<div class="modal fade" id="cookieModal" tabindex="-1" aria-labelledby="cookieModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Çerez Tercihleri</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
-            </div>
-            <div class="modal-body">
-                <p>Bu web sitesi, kullanıcı deneyimini iyileştirmek ve analiz amacıyla çerezler kullanır.</p>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="necessaryCookies" checked disabled>
-                    <label class="form-check-label" for="necessaryCookies">Zorunlu Çerezler</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="analyticsCookies">
-                    <label class="form-check-label" for="analyticsCookies">Analitik Çerezler</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="marketingCookies">
-                    <label class="form-check-label" for="marketingCookies">Pazarlama Çerezleri</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="saveCookieSettings" class="btn btn-primary">Kaydet</button>
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-            </div>
+        <div>
+            <button id="btn-cookie-consent-accept" class="btn btn-success btn-sm me-2">Tümünü Kabul Et</button>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        document.getElementById("cookiePreferences").addEventListener("click", function () {
-            var modal = new bootstrap.Modal(document.getElementById("cookieModal"));
-            modal.show();
+<!-- Cookie Settings Popup -->
+<div id="cookie-settings-popup" class="cookie-settings-popup" style="display: none;">
+    <div class="cookie-settings-content bg-white p-4 rounded shadow-lg">
+        <h5>Çerez Tercihleri</h5>
+        <p>Hangi çerezlerin kullanılmasına izin vereceğinizi seçebilirsiniz.</p>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="performance-cookies" checked>
+            <label class="form-check-label" for="performance-cookies">
+                Performans Çerezleri
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="targeting-cookies" checked>
+            <label class="form-check-label" for="targeting-cookies">
+                Hedefleme Çerezleri
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="functional-cookies" checked>
+            <label class="form-check-label" for="functional-cookies">
+                Fonksiyonel Çerezler
+            </label>
+        </div>
+        <div class="mt-3 d-flex justify-content-end gap-2">
+            <button id="btn-close-settings" class="btn btn-secondary btn-sm">Vazgeç</button>
+            <button id="btn-save-settings" class="btn btn-primary btn-sm">Ayarları Kaydet</button>
+        </div>
+    </div>
+</div>
+
+<!-- Stil -->
+<style>
+    .cookie-consent-box {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #222;
+        color: white;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+    }
+
+    .cookie-settings-popup {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+        display: none;
+    }
+
+    .cookie-settings-content {
+        max-width: 400px;
+        width: 100%;
+    }
+</style>
+
+<!-- Script -->
+<script>
+    let constants = {
+        storageKey: "cookiePreferences",
+        selectors: {
+            cookieConsentBox: "#cookie-consent-box",
+            acceptButton: "#btn-cookie-consent-accept",
+            saveSettingsButton: "#btn-save-settings",
+            closeSettingsButton: "#btn-close-settings",
+            cookieSettingsButton: "#btn-cookie-settings",
+            cookieSettingsPopup: "#cookie-settings-popup",
+            performanceCookies: "#performance-cookies",
+            targetingCookies: "#targeting-cookies",
+            functionalCookies: "#functional-cookies",
+        },
+        events: {
+            click: "click",
+        },
+    };
+
+    const hideCookieConsentBox = () => {
+        const box = $(constants.selectors.cookieConsentBox);
+        box.css("opacity", "0");
+        setTimeout(() => {
+            box.css("display", "none");
+        }, 500);
+    };
+
+    const showCookieConsentBox = () => {
+        const box = $(constants.selectors.cookieConsentBox);
+        box.css("display", "block");
+        setTimeout(() => {
+            box.css("opacity", "1");
+        }, 100);
+    };
+
+    const setCookiePreferences = (preferences) => {
+        localStorage.setItem(constants.storageKey, JSON.stringify(preferences));
+    };
+
+    const getCookiePreferences = () => {
+        return JSON.parse(localStorage.getItem(constants.storageKey) ?? null);
+    };
+
+    const userAcceptedCookies = () => {
+        const preferences = getCookiePreferences();
+        return preferences && preferences.accepted;
+    };
+
+    $(document).ready(() => {
+        const cookieBox = $(constants.selectors.cookieConsentBox);
+        const settingsPopup = $(constants.selectors.cookieSettingsPopup);
+
+        if (userAcceptedCookies()) {
+            hideCookieConsentBox();
+        }
+
+        $(constants.selectors.acceptButton).on(constants.events.click, () => {
+            setCookiePreferences({
+                performance: true,
+                targeting: true,
+                functional: true,
+                accepted: true,
+            });
+            hideCookieConsentBox();
         });
 
-        document.getElementById("acceptCookies").addEventListener("click", function () {
-            fetch('/cookie/set?consent=true', { method: 'POST' })
-                .then(() => {
-                    document.getElementById("cookieBanner").style.display = "none";
-                });
+        $(constants.selectors.cookieSettingsButton).on(constants.events.click, () => {
+            const preferences = getCookiePreferences();
+            if (preferences) {
+                $(constants.selectors.performanceCookies).prop("checked", preferences.performance);
+                $(constants.selectors.targetingCookies).prop("checked", preferences.targeting);
+                $(constants.selectors.functionalCookies).prop("checked", preferences.functional);
+            }
+            settingsPopup.css("display", "flex");
         });
 
-        document.getElementById("saveCookieSettings").addEventListener("click", function () {
-            const analytics = document.getElementById("analyticsCookies").checked;
-            const marketing = document.getElementById("marketingCookies").checked;
-
-            fetch(`/cookie/set?analytics=${analytics}&marketing=${marketing}`, { method: 'POST' })
-                .then(() => {
-                    document.getElementById("cookieBanner").style.display = "none";
-                    var modal = bootstrap.Modal.getInstance(document.getElementById("cookieModal"));
-                    modal.hide();
-                });
+        $(constants.selectors.closeSettingsButton).on(constants.events.click, () => {
+            settingsPopup.css("display", "none");
         });
-    </script>
-}
+
+        $(constants.selectors.saveSettingsButton).on(constants.events.click, () => {
+            const performance = $(constants.selectors.performanceCookies).prop("checked");
+            const targeting = $(constants.selectors.targetingCookies).prop("checked");
+            const functional = $(constants.selectors.functionalCookies).prop("checked");
+
+            setCookiePreferences({
+                performance,
+                targeting,
+                functional,
+                accepted: true,
+            });
+
+            settingsPopup.css("display", "none");
+            hideCookieConsentBox();
+        });
+
+        $(document).scroll(() => {
+            if ($(document).scrollTop() > 250 && !userAcceptedCookies()) {
+                showCookieConsentBox();
+            }
+        });
+    });
+</script>

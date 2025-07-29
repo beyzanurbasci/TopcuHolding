@@ -1,75 +1,29 @@
-﻿//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using System;
-
-//namespace TopcuHolding.Controllers
-//{
-//    [Route("cerezler")]
-//    public class CookieController : Controller
-//    {
-//        [HttpGet("")]
-//        public IActionResult Index()
-//        {
-//            // Kullanıcının mevcut çerez tercihlerini alıyoruz
-//            var consent = Request.Cookies["cookieConsent"];
-//            var analytics = Request.Cookies["cookieAnalytics"];
-//            var ads = Request.Cookies["cookieAds"];
-//            var performance = Request.Cookies["cookiePerformance"];
-
-//            ViewBag.CookieConsent = consent;
-//            ViewBag.Analytics = analytics == "true";
-//            ViewBag.Ads = ads == "true";
-//            ViewBag.Performance = performance == "true";
-
-//            return View("Index");
-//        }
-
-//        [HttpPost("onay")]
-//        [ValidateAntiForgeryToken]
-//        public IActionResult HandleConsent(bool analytics = false, bool ads = false, bool performance = false)
-//        {
-//            var options = new CookieOptions
-//            {
-//                Expires = DateTimeOffset.UtcNow.AddDays(30),
-//                HttpOnly = true,
-//                Secure = Request.IsHttps,  // Sadece HTTPS ise secure koy
-//                SameSite = SameSiteMode.Strict,
-//                Path = "/"
-//            };
-
-//            // Zorunlu çerez olduğu için consent cookie true olarak set edilir
-//            Response.Cookies.Append("cookieConsent", "true", options);
-
-//            // İsteğe bağlı çerezleri tercihe göre set et
-//            Response.Cookies.Append("cookieAnalytics", analytics ? "true" : "false", options);
-//            Response.Cookies.Append("cookieAds", ads ? "true" : "false", options);
-//            Response.Cookies.Append("cookiePerformance", performance ? "true" : "false", options);
-
-//            TempData["Message"] = "Çerez tercihlerin kaydedildi.";
-
-//            return RedirectToAction("Index");
-//        }
-
-//        [HttpGet("cerezpolitikasi")]
-//        public IActionResult CookiePolicy()
-//        {
-//            return View("CookiePolicy");
-//        }
-//    }
-//}
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace TopcuHolding.Controllers
 {
-    [Route("cookie")]
+    [Route("cerezler")]
     public class CookieController : Controller
     {
-        [HttpPost("set")]
-        public IActionResult Set(bool consent = false, bool analytics = false, bool marketing = false)
+        public class CookieConsentModel
         {
-            var options = new CookieOptions
+            public bool Performance { get; set; }
+            public bool Targeting { get; set; }
+            public bool Functional { get; set; }
+        }
+
+        [HttpGet("cerezpolitikasi")]
+        public IActionResult CookiePolicy()
+        {
+            return View(); // Views/Cookie/CookiePolicy.cshtml
+        }
+
+        [HttpPost("onay")]
+        [ValidateAntiForgeryToken]
+        public IActionResult SetConsent([FromBody] CookieConsentModel model)
+        {
+            var cookieOptions = new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddYears(1),
                 HttpOnly = true,
@@ -77,17 +31,31 @@ namespace TopcuHolding.Controllers
                 SameSite = SameSiteMode.Strict
             };
 
-            Response.Cookies.Append("CookieConsent", consent.ToString(), options);
-            Response.Cookies.Append("AnalyticsConsent", analytics.ToString(), options);
-            Response.Cookies.Append("MarketingConsent", marketing.ToString(), options);
+            Response.Cookies.Append("CookieConsent", "accepted", cookieOptions);
+            Response.Cookies.Append("PerformanceCookies", model.Performance.ToString().ToLower(), cookieOptions);
+            Response.Cookies.Append("TargetingCookies", model.Targeting.ToString().ToLower(), cookieOptions);
+            Response.Cookies.Append("FunctionalCookies", model.Functional.ToString().ToLower(), cookieOptions);
 
-            return Ok(new { message = "Çerez tercihleri başarıyla kaydedildi." });
+            return Ok(new { success = true, message = "Çerez tercihleri kaydedildi." });
         }
 
-        [HttpGet("policy")]
-        public IActionResult CookiePolicy()
+        [HttpGet("kontrol")]
+        public IActionResult CheckConsent()
         {
-            return View("CookiePolicy"); // Views/Cookie/CookiePolicy.cshtml
+            var hasConsent = Request.Cookies.ContainsKey("CookieConsent");
+
+            if (!hasConsent)
+            {
+                return Ok(new { hasConsent = false });
+            }
+
+            return Ok(new
+            {
+                hasConsent = true,
+                performance = bool.Parse(Request.Cookies["PerformanceCookies"] ?? "false"),
+                targeting = bool.Parse(Request.Cookies["TargetingCookies"] ?? "false"),
+                functional = bool.Parse(Request.Cookies["FunctionalCookies"] ?? "false")
+            });
         }
     }
 }

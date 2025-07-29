@@ -65,8 +65,10 @@ namespace TopcuHolding.Route
         {
             public const string Index = "cerezler";
             public const string Consent = "cerezler/consent";
+            public const string SetConsent = "cerezler/onay";
             public const string CookiePolicy = "cerezler/cerezpolitikasi";
         }
+
 
     }
 }

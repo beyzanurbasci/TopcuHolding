@@ -1,93 +1,341 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
 
-	<title>@(ViewData["Title"] ?? "Topçu Holding")</title>
-
-	<meta name="keywords" content="Topçu Holding, Endüstriyel Üretim, Yatırım, Jeneratör, Testere Makineleri" />
-	<meta name="description" content="Topçu Holding, sanayi ve üretim alanında faaliyet gösteren kurumsal bir şirkettir.">
-	<meta name="author" content="Topçu IT">
-
-	<!-- Favicon -->
-	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-	<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-
-	<!-- CSS -->
-	<partial name="_LayoutCssPartial" />
-	@RenderSection("PageSpecificCss", required: false)
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(ViewData["Title"] ?? "Topçu Holding")</title>
+    <partial name="_LayoutCssPartial" />
+    @RenderSection("PageSpecificCss", required: false)
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<body>
+    @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery
 
-<body data-plugin-scroll-spy data-plugin-options="{'target': '#sidebar'}">
-	<style>
-		.nav-link.active {
-			color: #0d47a1 !important;
-			font-weight: bold;
-		}
-	</style>
+    @{
+        var tokens = antiforgery.GetAndStoreTokens(Context);
+    }
+    <input type="hidden" name="__RequestVerificationToken" value="@tokens.RequestToken" />
 
-	<div class="body">
-		<partial name="Header/_HeaderPartial" />
-		@RenderBody()
-		<partial name="Footer/_FooterPartial" />
-	</div>
 
-	<!-- Çerez Banner'ı -->
-	<div id="cookieConsent" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#222; color:white; padding:20px; z-index:9999;">
-		<div class="container d-flex justify-content-between align-items-center">
-			<div>
-				Bu web sitesi çerezleri kullanmaktadır. Daha fazla bilgi için <a href="/kvkk" style="color: #ccc;">KVKK Politikamıza</a> göz atabilirsiniz.
-			</div>
-			<div>
-				<button id="acceptCookies" class="btn btn-success btn-sm me-2">Kabul Et</button>
-				<button id="declineCookies" class="btn btn-danger btn-sm">Reddet</button>
-			</div>
-		</div>
-	</div>
+    <div class="body">
+        <partial name="Header/_HeaderPartial" />
 
-	<!-- Script: Çerez Onay ve GA -->
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			var cookieConsent = document.getElementById("cookieConsent");
-			var cookiesAccepted = localStorage.getItem("cookiesAccepted");
+        @RenderBody()
 
-			if (!cookiesAccepted) {
-				cookieConsent.style.display = "block";
-			}
+        <partial name="Footer/_FooterPartial" />
+    </div>
 
-			document.getElementById("acceptCookies").addEventListener("click", function () {
-				localStorage.setItem("cookiesAccepted", "true");
-				cookieConsent.style.display = "none";
+    @{
+        var hasConsent = Context.Request.Cookies.ContainsKey("CookieConsent");
+    }
 
-				fetch("/cookie/set"); // Server'a istek gönder
+    @if (!hasConsent)
+    {
+        <!-- Çerez Banner HTML -->
+        <div id="cookieBanner" class="cookie-banner">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <p class="mb-0 small text-white">
+                            Bu web sitesi deneyiminizi iyileştirmek için çerezleri kullanır.
+                            <button onclick="window.location.href='/cerezler/cerezpolitikasi'" class="btn btn-link btn-sm text-white text-decoration-underline p-0 align-baseline">
+                                Çerez Politikası
+                            </button>
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                        <button type="button" id="cookiePreferencesBtn" class="btn btn-sm me-2 text-white" data-bs-toggle="modal" data-bs-target="#cookiePreferencesModal">
+                            Çerez Tercihleri
+                        </button>
 
-				// GA script'i yükle
-				var ga = document.createElement('script');
-				ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX'; // GA-ID'yi değiştir
-				document.head.appendChild(ga);
+                        <button id="acceptAllBtn" onclick="acceptAllCookies()" class="btn btn-sm me-2 text-white">
+                            Tümünü Kabul Et
+                        </button>
+                        <button id="rejectAllBtn" onclick="rejectAllCookies()" class="btn btn-sm text-white">
+                            Reddet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				ga.onload = function () {
-					window.dataLayer = window.dataLayer || [];
-					function gtag() { dataLayer.push(arguments); }
-					gtag('js', new Date());
-					gtag('config', 'G-XXXXXXX');
-				};
-			});
 
-			document.getElementById("declineCookies").addEventListener("click", function () {
-				localStorage.setItem("cookiesAccepted", "false");
-				cookieConsent.style.display = "none";
-			});
-		});
-	</script>
 
-	@await Html.PartialAsync("_CookieConsentPartial")
+        <!-- Çerez Tercih Paneli (Gizli Başlangıç) -->
+        <div id="cookiePreferencesPanel" class="cookie-preferences-panel" style="display: none;">
+            <div class="container p-4 bg-light rounded">
+                <h5>Çerez Tercihleri</h5>
+                <form id="cookiePreferencesForm">
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" id="performanceCookies">
+                        <label class="form-check-label" for="performanceCookies">Performans Çerezleri</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="targetingCookies">
+                        <label class="form-check-label" for="targetingCookies">Hedefleme Çerezleri</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="functionalCookies">
+                        <label class="form-check-label" for="functionalCookies">Fonksiyonel Çerezler</label>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="closeCookiePreferences()">İptal</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="saveCookiePreferences()">Tercihleri Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-	<!-- Sayfa Özel Script -->
-	@RenderSection("Scripts", required: false)
 
-	<!-- Ortak JS -->
-	<partial name="_LayoutJsPartial" />
+       
+       
+        <!-- Çerez Tercihleri Modal -->
+        <div class="modal fade" id="cookiePreferencesModal" tabindex="-1" aria-labelledby="cookiePreferencesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content rounded-3">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="cookiePreferencesModalLabel">Çerez Tercihleri</h5>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <p class="mb-4">
+                            Çerez tercihlerinizi yönetebilirsiniz. Aşağıdaki kategorilerden dilediğinizi seçerek,
+                            hangi çerezlerin kullanılacağını kontrol edebilirsiniz.
+                        </p>
+
+                        <!-- Performans Çerezleri -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-primary">Performans Çerezleri</label>
+                            <p class="text-muted small mb-2">Bu çerezler, internet sitemizin performansını artırmamıza yardımcı olur.</p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="performanceCookies">
+                            </div>
+                        </div>
+
+                        <!-- Hedefleme Amaçlı Çerezler -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-primary">Hedefleme Amaçlı Çerezler</label>
+                            <p class="text-muted small mb-2">Bu çerezler, size uygun reklamlar göstermek ve ilgi alanlarınıza yönelik içerik sunmak için kullanılır.</p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="targetingCookies">
+                            </div>
+                        </div>
+
+                        <!-- İşlevsel Çerezler -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-primary">İşlevsel Çerezler</label>
+                            <p class="text-muted small mb-2">Bu çerezler, tercihlerinizi hatırlamamızı sağlar.</p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="functionalCookies">
+                            </div>
+                        </div>
+
+                        <!-- Zorunlu Çerezler -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-primary">Zorunlu Çerezler</label>
+                            <p class="text-muted small mb-2">Bu çerezler sitemizin temel işlevlerini yerine getirmesi için zorunludur.</p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-primary" onclick="saveCookiePreferences()">Seçimlerimi Onayla</button>
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+    <!-- CSS Stilleri -->
+    <style>
+        .cookie-banner {
+            position: fixed;
+            bottom: -100px;
+            left: 0;
+            right: 0;
+            background: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            z-index: 9999;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            transition: bottom 0.5s ease-in-out;
+        }
+
+            .cookie-banner.show {
+                bottom: 0;
+            }
+
+        .cookie-settings {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .cookie-settings.show {
+                display: flex;
+            }
+
+        .cookie-settings-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cookie-type {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+            .cookie-type h6 {
+                margin-bottom: 8px;
+                color: #2c3e50;
+            }
+
+            .cookie-type p {
+                font-size: 0.9rem;
+                color: #6c757d;
+                margin-bottom: 0;
+            }
+    </style>
+
+    <!-- JavaScript -->
+    <script>
+        function showCookieBanner() {
+            const isCookieSet = localStorage.getItem('cookiesAccepted');
+            if (!isCookieSet) {
+                document.getElementById('cookieBanner').classList.add('show');
+            }
+        }
+
+        function hideCookieBanner() {
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
+        function sendCookiePreferences(preferences) {
+            fetch('/cerezler/onay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify(preferences)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Çerez tercihleri başarıyla kaydedildi');
+                }
+            })
+            .catch(error => console.error('Hata:', error));
+        }
+
+        function acceptAllCookies() {
+            const preferences = {
+                performance: true,
+                targeting: true,
+                functional: true
+            };
+            sendCookiePreferences(preferences);
+            localStorage.setItem('cookiesAccepted', 'true');
+            hideCookieBanner();
+        }
+
+        function rejectAllCookies() {
+            const preferences = {
+                performance: false,
+                targeting: false,
+                functional: false
+            };
+            sendCookiePreferences(preferences);
+            localStorage.setItem('cookiesAccepted', 'true');
+            hideCookieBanner();
+        }
+
+        function saveCookiePreferences() {
+            const performance = document.getElementById('performanceCookies').checked;
+            const targeting = document.getElementById('targetingCookies').checked;
+            const functional = document.getElementById('functionalCookies').checked;
+
+            const preferences = {
+                performance: performance,
+                targeting: targeting,
+                functional: functional
+            };
+
+            sendCookiePreferences(preferences);
+            localStorage.setItem('cookiesAccepted', 'true');
+            hideCookieBanner();
+
+            // Modal'ı kapat
+            const modalEl = document.getElementById('cookiePreferencesModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+
+            // Sayfayı eski haline getir (kararma, scroll kilidi gibi)
+            document.body.classList.remove('modal-open');
+            document.body.style = '';
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) backdrop.remove();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            showCookieBanner();
+
+            // Modal dışına tıklanınca kapansın
+            const modal = document.getElementById('cookiePreferencesModal');
+            if (modal) {
+                modal.addEventListener('click', function (e) {
+                    if (e.target === modal) {
+                        const modalInstance = bootstrap.Modal.getInstance(modal);
+                        if (modalInstance) {
+                            modalInstance.hide();
+                        }
+                    }
+                });
+
+                // Modal kapanınca arkadaki koyu ton kalksın (yedek temizlik)
+                modal.addEventListener('hidden.bs.modal', function () {
+                    document.body.classList.remove('modal-open');
+                    document.body.style = '';
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) backdrop.remove();
+                });
+            }
+
+            // "Seçimlerimi Onayla" butonu click eventi
+            const saveBtn = document.getElementById('savePreferencesBtn');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', saveCookiePreferences);
+            }
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+    <partial name="_LayoutJsPartial" />
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

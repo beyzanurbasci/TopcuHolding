@@ -20,4 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+#cookiePreferencesBtn,
+#acceptAllBtn,
+#rejectAllBtn {
+    background-color: #0f4473 !important;
+    border: none;
+    color: white !important;
+}
+
+    #cookiePreferencesBtn:hover,
+    #acceptAllBtn:hover,
+    #rejectAllBtn:hover {
+        background-color: #0c3659 !important;
+        color: white !important;
+    }
 

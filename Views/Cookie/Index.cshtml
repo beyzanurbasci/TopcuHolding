@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Çerez Tercihleri";
     var consent = ViewBag.CookieConsent as string;
-    var analytics = (bool)(ViewBag.Analytics ?? false);
     var ads = (bool)(ViewBag.Ads ?? false);
     var performance = (bool)(ViewBag.Performance ?? false);
 }
@@ -14,54 +13,45 @@
     <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background: #f5f5f5; padding: 15px; border-top: 1px solid #ccc; z-index: 9999; display: flex; justify-content: space-between; align-items: center;">
         <div>
             Web sitemiz, deneyiminizi geliştirmek için çerezler kullanmaktadır.
-            <a href="/cerezler/cerezpolitikasi" target="_blank">Daha fazla bilgi</a>.
+            <a href="@Url.Action("CookiePolicy", "Cookie")" target="_blank">Daha fazla bilgi</a>.
         </div>
         <div>
             <button onclick="document.getElementById('cookie-modal').style.display='block'" style="margin-right:10px;">Çerez Tercihleri</button>
-            <form method="post" action="/cerezler/onay" style="display:inline;">
+            <form method="post" action="@Url.Action("Set", "Cookie")" style="display:inline;">
                 @Html.AntiForgeryToken()
+                <input type="hidden" name="consent" value="true" />
                 <input type="hidden" name="analytics" value="true" />
-                <input type="hidden" name="ads" value="true" />
-                <input type="hidden" name="performance" value="true" />
+                <input type="hidden" name="marketing" value="true" />
                 <button type="submit">Tümünü Kabul Et</button>
             </form>
         </div>
     </div>
-
-    <!-- Çerez tercih modalı -->
-    <div id="cookie-modal" style="display:none; position:fixed; top:20%; left:50%; transform: translateX(-50%); width: 400px; background:#fff; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.3); border-radius: 8px; z-index: 10000;">
-        <h3>Çerez Tercihlerinizi Belirleyin</h3>
-        <form method="post" action="/cerezler/onay">
-            @Html.AntiForgeryToken()
-            <div style="margin-bottom: 10px;">
-                <input type="checkbox" id="analytics" name="analytics" checked disabled />
-                <label for="analytics">Zorunlu Çerezler (devre dışı bırakılamaz)</label>
-            </div>
-            <div style="margin-bottom: 10px;">
-                <input type="checkbox" id="ads" name="ads" @(ads ? "checked" : "") />
-                <label for="ads">Reklam ve Hedefleme Çerezleri</label>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <input type="checkbox" id="performance" name="performance" @(performance ? "checked" : "") />
-                <label for="performance">Performans Çerezleri</label>
-            </div>
-
-            <button type="submit">Tercihleri Kaydet</button>
-            <button type="button" onclick="document.getElementById('cookie-modal').style.display='none'">İptal</button>
-        </form>
-    </div>
-
-    <script>
-        // Modal kapatma dışarı tıklayınca
-        window.onclick = function (event) {
-            var modal = document.getElementById('cookie-modal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 }
-else
+
+<!-- Ortak Modal -->
+<div id="cookie-modal" style="display:none; position:fixed; top:20%; left:50%; transform: translateX(-50%); width: 400px; background:#fff; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.3); border-radius: 8px; z-index: 10000;">
+    <h3>Çerez Tercihlerinizi Belirleyin</h3>
+    <form method="post" action="@Url.Action("Set", "Cookie")">
+        @Html.AntiForgeryToken()
+        <div style="margin-bottom: 10px;">
+            <input type="checkbox" id="analytics" name="analytics" checked disabled />
+            <label for="analytics">Zorunlu Çerezler (devre dışı bırakılamaz)</label>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <input type="checkbox" id="marketing" name="marketing" @(ads ? "checked" : "") />
+            <label for="marketing">Reklam ve Hedefleme Çerezleri</label>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <input type="checkbox" id="performance" name="performance" @(performance ? "checked" : "") />
+            <label for="performance">Performans Çerezleri</label>
+        </div>
+        <input type="hidden" name="consent" value="true" />
+        <button type="submit">Tercihleri Kaydet</button>
+        <button type="button" onclick="document.getElementById('cookie-modal').style.display='none'">İptal</button>
+    </form>
+</div>
+
+@if (!string.IsNullOrEmpty(consent))
 {
     <div style="margin-top: 20px; padding: 15px; background-color: #e7f3fe; border: 1px solid #b3d4fc;">
         <p>Çerez tercihleriniz kaydedildi.</p>
@@ -72,36 +62,13 @@ else
         </ul>
         <button onclick="document.getElementById('cookie-modal').style.display='block'">Tercihleri Güncelle</button>
     </div>
-
-    <!-- Aynı modalı burada da kullanabilirsin -->
-    <div id="cookie-modal" style="display:none; position:fixed; top:20%; left:50%; transform: translateX(-50%); width: 400px; background:#fff; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.3); border-radius: 8px; z-index: 10000;">
-        <h3>Çerez Tercihlerinizi Güncelleyin</h3>
-        <form method="post" action="/cerezler/onay">
-            @Html.AntiForgeryToken()
-            <div style="margin-bottom: 10px;">
-                <input type="checkbox" id="analytics" name="analytics" checked disabled />
-                <label for="analytics">Zorunlu Çerezler (devre dışı bırakılamaz)</label>
-            </div>
-            <div style="margin-bottom: 10px;">
-                <input type="checkbox" id="ads" name="ads" @(ads ? "checked" : "") />
-                <label for="ads">Reklam ve Hedefleme Çerezleri</label>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <input type="checkbox" id="performance" name="performance" @(performance ? "checked" : "") />
-                <label for="performance">Performans Çerezleri</label>
-            </div>
-
-            <button type="submit">Tercihleri Kaydet</button>
-            <button type="button" onclick="document.getElementById('cookie-modal').style.display='none'">İptal</button>
-        </form>
-    </div>
-
-    <script>
-        window.onclick = function (event) {
-            var modal = document.getElementById('cookie-modal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 }
+
+<script>
+    window.onclick = function (event) {
+        var modal = document.getElementById('cookie-modal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
