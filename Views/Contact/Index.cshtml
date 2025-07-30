@@ -6,7 +6,7 @@
 <div role="main" class="main">
 
 	<section class="section section-height-3 border-0 m-0"
-			 style="background-image:url('@Url.Content("~/assets/NewFolder/yonetim.png")'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+			 style="background-image:url('@Url.Content("")'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 		<div class="container position-relative pt-5 pb-5-5 mt-5 mb-5">
 			<div class="row justify-content-end pt-1 mt-lg-5">
 				<div class="col-7 col-md-5 position-relative">
@@ -15,6 +15,16 @@
 						data-appear-animation-delay="200">
 						<li class="active"></li>
 					</ul>
+					<h1 class="position-absolute top-100 left-0 text-color-light font-weight-bold text-6 line-height-3 text-end mt-5-5">
+						<span class="d-block position-relative z-index-1 pb-5 ps-lg-3 appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="800">
+							İletişim
+						</span>
+						<span class="custom-svg-position-1 custom-svg-position-1-variation">
+							<svg class="svg-fill-color-dark mt-1 appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 859.45 88.44" xml:space="preserve" preserveAspectRatio="none">
+							<polyline points="7.27,84.78 855.17,84.78 855.17,4.79 84.74,4.79 " />
+				                        </svg>
+						</span>
+					</h1>
 
 				</div>
 			</div>
@@ -49,54 +59,20 @@
 				</span>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-lg-6 mb-4 mb-lg-0 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
-				<h2 class="font-weight-bold text-color-dark text-6 mb-0">Bize Mesaj Gönderin</h2>
-				<form class="contact-form form-style-3" action="php/contact-form.php" method="POST">
-					<div class="contact-form-success alert alert-success d-none mt-4">
-						<strong>Success!</strong> Your message has been sent to us.
-					</div>
-					<div class="contact-form-error alert alert-danger d-none mt-4">
-						<strong>Error!</strong> There was an error sending your message.
-						<span class="mail-error-message text-1 d-block"></span>
-					</div>
-					<div class="row">
-						<div class="form-group col mb-3-5">
-							<input type="text" value="" data-msg-required="Lütfen adınızı girin ." maxlength="100" class="form-control text-3 h-auto py-3-5" name="name" placeholder="Adınız" required>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col mb-3-5">
-							<input type="email" value="" data-msg-required="Lütfen email adresinizi giriniz." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control text-3 h-auto py-3-5" name="email" placeholder="Email adresiniz" required>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col mb-3-5">
-							<input type="text" value="" data-msg-required="Lütfen konuyu giriniz" maxlength="100" class="form-control text-3 h-auto py-3-5" name="subject" placeholder="Konu" required>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col mb-3-5">
-							<textarea maxlength="5000" data-msg-required="Lütfen mesajınızı giriniz" rows="8" class="form-control text-3 h-auto py-3-5" name="message" placeholder="Mesaj" required></textarea>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<button type="submit" class="custom-view-more d-inline-flex align-items-center btn btn-primary font-weight-semibold rounded-0 text-3-5 btn-px-4 btn-py-2" data-loading-text="Loading...">
-								Gönder
-								<img width="27" height="27" src="img/demos/construction/icons/arrow-right.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-light ms-2'}" />
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="col-lg-6 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800">
-				
-				<!-- Google Map Embed Start -->
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12040.726576696527!2d29.243318711286023!3d40.99125177151039!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac7b56c548bbf%3A0xe445a683946b18d3!2sAbdurrahmangazi%2C%20%C4%B0mamo%C4%9Flu%20Sk.%2C%20Sancaktepe%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1721133667425!5m2!1str!2str" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-				<!-- Google Map Embed End -->
+		<div class="col-lg-6 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" style="display: flex; justify-content: center;">
+			<div style="width: 100%; max-width: 800px;">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12040.726576696527!2d29.243318711286023!3d40.99125177151039!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac7b56c548bbf%3A0xe445a683946b18d3!2sAbdurrahmangazi%2C%20%C4%B0mamo%C4%9Flu%20Sk.%2C%20Sancaktepe%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1721133667425!5m2!1str!2str"
+						width="200%"
+						height="400"
+						style="border:0;"
+						allowfullscreen=""
+						loading="lazy"
+						referrerpolicy="no-referrer-when-downgrade">
+				</iframe>
 			</div>
 		</div>
+
+		
 	</div>
 
 	<div class="position-relative pb-5 d-none d-xl-block">
