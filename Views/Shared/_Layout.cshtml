@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@model TopcuHolding.Models.ContactMessage
+
+
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 
@@ -37,7 +40,10 @@
 
 		@RenderBody()
 
-		<partial name="Footer/_FooterPartial" />
+		@* <partial name="Footer/_FooterPartial" /> *@
+		@await Html.PartialAsync("Footer/_FooterPartial")
+
+
 	</div>
 	@RenderSection("Scripts", required: false) @*spesifik js kullanımı için*@
 

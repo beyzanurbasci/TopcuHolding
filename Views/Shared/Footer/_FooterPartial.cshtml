@@ -1,358 +1,204 @@
-﻿
-@* <footer id="footer" class="overflow-hidden border-0 m-0" style="background-image: url(~/assets/img/demos/construction/backgrounds/background-2.jpg); background-repeat: no-repeat; background-position: center bottom;">
-	<div class="container pt-5">
-		<div class="row pt-4 mb3 gy-4">
-			<div class="col-lg-2 align-self-center">
-				<a href="/">
-                    <img alt="Porto" class="img-fluid logo" width="300px" height="300px"  src="~/assets/newfolder/topçu holding logo 2.png">
-				</a>
-			</div>
-			<div class="col-lg-4 offset-lg-1">
-				<h4 class="text-color-dark font-weight-bold mb-4-5"></h4>
-				<ul class="list list-unstyled columns-lg-2">
-					<li>
-						<a href="/" class="text-color-hover-primary">
-							Anasayfa
-						</a>
-					</li>
-					<li>
-						<a href="@Routes.Corporate.About" class="text-color-hover-primary">
-							Hakkımızda
-						</a>
-					</li>
-					<li>
-						<a href="@Routes.HumanResources.Index" class="text-color-hover-primary">
-							İnsan Kaynakları
-						</a>
-					</li>
-					<li>
-						<a href="@Routes.Contact.Index" class="text-color-hover-primary">
-							İletişim
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div class="col-lg-5">
-				<h4 class="text-color-dark font-weight-bold mb-4-5">Bize Ulaşın</h4>
-				<div class="newsletter">
-					<div class="alert alert-success d-none" id="newsletterSuccess">
-						<strong>Success!</strong> You've been added to our email list.
-					</div>
-					<div class="alert alert-danger d-none" id="newsletterError"></div>
-					<form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST" class="mb-4-5">
-						<div class="input-group">
-							<input class="form-control border-0" placeholder="Email adresi giriniz " name="newsletterEmail" id="newsletterEmail" type="email">
-							<button class="btn btn-primary px-3" type="submit">
-								<img width="27" height="27" src="~/assets/img/demos/construction/icons/arrow-right.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-light'}" style="width: 27px;" />
-							</button>
-						</div>
-					</form>
-				</div>
-				<ul class="list list-unstyled list-inline">
-					<li class="list-inline-item d-inline-flex align-items-center">
-						<img width="23" height="23" src="~/assets/img/demos/construction/icons/phone.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-dark'}" />
-						<a href="tel:+90 850 222 73 47" class="text-decoration-none text-color-dark text-color-hover-primary font-weight-bold text-3-5 ms-2">+90 850 222 73 47</a>
-					</li>
-					<li class="list-inline-item d-inline-flex align-items-center ms-0 ms-sm-4 ms-lg-1 ms-xl-4">
-						<img width="23" height="23" src="~/assets/img/demos/construction/icons/email.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-dark'}" />
-						<a href="mailto:0123456789" class="text-decoration-none text-color-dark text-color-hover-primary font-weight-bold text-3-5 ms-2">info@topcuholding.com</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		<hr>
-
-		<div class="footer-copyright bg-transparent pb-5 mt-5-5">
-			<div class="row pb-5">
-				<div class="col text-center mb-5">
-					<p class="text-color-grey text-3 mb-3">Topçu Holding © 2025 . Tüm Hakları Saklıdır </p>
-					<ul class="footer-social-icons social-icons social-icons-clean social-icons-medium mb-5">
-						<li class="social-icons-instagram">
-							<a href="http://www.instagram.com/" target="_blank" title="Instagram"><i class="fab fa-instagram text-4"></i></a>
-						</li>
-						<li class="social-icons-x">
-							<a href="http://www.x.com/" target="_blank" title="X"><i class="fab fa-x-twitter text-4"></i></a>
-						</li>
-						<li class="social-icons-facebook">
-							<a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f text-4"></i></a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-	</div>
-	<div class="position-absolute left-100pct transform3dx-n50 top-0 d-none d-lg-block">
-		<div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="1000" data-appear-animation-duration="1500ms">
-			<div class="custom-square-1 custom-square-1-big bg-dark mt-0 mb-5 me-5"></div>
-		</div>
-	</div>
-</footer> *@
-
-@model TopcuHolding.Models.ContactMessage
+﻿@model TopcuHolding.Models.ContactMessage
 @inject IConfiguration Configuration
 @{
-	ViewData["Title"] = "İletişim";
-	var siteKey = Configuration["GoogleReCaptcha:SiteKey"];
-	
+    ViewData["Title"] = "İletişim";
+    var siteKey = Configuration["GoogleReCaptcha:SiteKey"];
+
 }
 
 
 
 
 <section class="section section-text-light section-background m-0"
-		 style="background-color:var(--primary); background-size: cover;">
-	@*background: url('@Url.Content("~/assets/img/topcu-holding/topcu-holding-cover-1.png")');
+         style="background-color:var(--primary); background-size: cover;">
+    @*background: url('@Url.Content("~/assets/img/topcu-holding/topcu-holding-cover-1.png")');
 		optionally you can use a background color instead of an image *@
 
-	<div class="container">
-		<div class="row justify-content-md-center">
-			<div class="col-lg-6 mb-5 mb-lg-0">
-				<h2 class="font-weight-bold">Bize Ulaşın</h2>
-				<p class="custom-opacity-font">
-					Topçu Holding olarak tarihi, milli ve kültürel sorumluluğumuzun farkındayız. Türkiye distribütörlüğünü yaptığımız global markalarımız, yerli ve milli üretimle ekonomimize katkı sağlamak konusundaki kararlılığımız ve olușturduğumuz istihdam olanakları ile geçmiște olduğu gibi yarın da ilerlemeye ve ülkemize katkı sağlamaya devam edeceğiz.
-				</p>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h2 class="font-weight-bold">Bize Ulaşın</h2>
+                <p class="custom-opacity-font">
+                    Topçu Holding olarak tarihi, milli ve kültürel sorumluluğumuzun farkındayız. Türkiye distribütörlüğünü yaptığımız global markalarımız, yerli ve milli üretimle ekonomimize katkı sağlamak konusundaki kararlılığımız ve olușturduğumuz istihdam olanakları ile geçmiște olduğu gibi yarın da ilerlemeye ve ülkemize katkı sağlamaya devam edeceğiz.
+                </p>
 
-				<div class="row">
-					<div class="col-md-6 custom-sm-margin-top">
-						<h4 class="mb-1">Telefon</h4>
-						<a href="tel:+90 850 222 73 47" class="text-decoration-none" target="_blank" title="Bizi Arayın">
-							<span class="custom-call-to-action-2 text-color-light text-2 custom-opacity-font">
+                <div class="row">
+                    <div class="col-md-6 custom-sm-margin-top">
+                        <h4 class="mb-1">Telefon</h4>
+                        <a href="tel:+90 850 222 73 47" class="text-decoration-none" target="_blank" title="Bizi Arayın">
+                            <span class="custom-call-to-action-2 text-color-light text-2 custom-opacity-font">
 
-								<span class="info text-5">
+                                <span class="info text-5">
 
-									+90 850 222 73 47
-								</span>
-							</span>
-						</a>
-					</div>
-					<div class="col-md-6 custom-sm-margin-top">
-						<h4 class="mb-1">Adres</h4>
-						@* <p class="custom-opacity-font">
+                                    +90 850 222 73 47
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 custom-sm-margin-top">
+                        <h4 class="mb-1">Adres</h4>
+                        @* <p class="custom-opacity-font">
 							Abdurrahmangazi Mah.
 							İmamoğlu Sokak No:2
 							Sancaktepe/İstanbul
 						</p> *@
-						<a style="/* font-size:1rem; */" href="https://maps.app.goo.gl/bwHVoYuAZe3bvhVM7" class="text-decoration-none custom-opacity-font" target="_blank" title="Adres">
+                        <a style="/* font-size:1rem; */" href="https://maps.app.goo.gl/bwHVoYuAZe3bvhVM7" class="text-decoration-none custom-opacity-font" target="_blank" title="Adres">
 
-							<p>
-								Abdurrahmangazi Mah.
-								İmamoğlu Sokak No:2
-								Sancaktepe / İstanbul
-							</p>
-
-
-						</a>
+                            <p>
+                                Abdurrahmangazi Mah.
+                                İmamoğlu Sokak No:2
+                                Sancaktepe / İstanbul
+                            </p>
 
 
-					</div>
-				</div>
-				@* <br />
+                        </a>
+
+
+                    </div>
+                </div>
+                @* <br />
 				<br /> *@
 
-				<div class="row">
-					<div class="col-md-6 custom-sm-margin-top">
-						<h4 class="mb-1">
-							E-posta
+                <div class="row">
+                    <div class="col-md-6 custom-sm-margin-top">
+                        <h4 class="mb-1">
+                            E-posta
 
-						</h4>
-						<a href="mail:info@topcuholding.com" class="text-decoration-none" target="_blank" title="E-Posta Adresimiz">
-							<span class="custom-call-to-action-2 text-color-light text-2 custom-opacity-font">
+                        </h4>
+                        <a href="mail:info@topcuholding.com" class="text-decoration-none" target="_blank" title="E-Posta Adresimiz">
+                            <span class="custom-call-to-action-2 text-color-light text-2 custom-opacity-font">
 
-								<span class="info text-5">
-									info@topcuholding.com
-								</span>
-							</span>
-						</a>
-					</div>
-					<div class="col-md-6 custom-sm-margin-top">
-						<h4 class="mb-1">Sosyal Medya</h4>
-						<ul class="social-icons social-icons-clean custom-social-icons-style-1 mt-2 custom-opacity-font">
-							@* <li class="social-icons-facebook">
-								<a href="http://www.facebook.com/" target="_blank" title="Facebook">
-									<i class="fab fa-facebook-f"></i>
-								</a>
-							</li> *@
-							@* <li class="social-icons-x">
-								<a href="http://www.x.com/" target="_blank" title="X">
-									<i class="fab fa-x-twitter"></i>
-								</a>
-							</li> *@
-							@* <li class="social-icons-instagram">
-								<a href="http://www.instagram.com/" target="_blank" title="Instagram">
-									<i class="fab fa-instagram"></i>
-								</a>
-							</li> *@
-							<li class="social-icons-linkedin">
-								<a href="https://www.linkedin.com/company/topcuholding" target="_blank" title="Linkedin">
-									<i class="fab fa-linkedin-in"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6 custom-sm-margin-top">
-				<h2 class="font-weight-bold">
-					Bizimle İletişime Geçin
-				</h2>
-		@* 		<form class="contact-form custom-contact-form-style-1 form-errors-light" action="php/contact-form.php" method="POST">
-					<div class="contact-form-success alert alert-success d-none mt-4">
-						<strong>Success!</strong> Mesajınız bize ulaşmıştır.
-					</div>
+                                <span class="info text-5">
+                                    info@topcuholding.com
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 custom-sm-margin-top">
+                        <h4 class="mb-1">Sosyal Medya</h4>
+                        <ul class="social-icons social-icons-clean custom-social-icons-style-1 mt-2 custom-opacity-font">
+                            <li class="social-icons-linkedin">
+                                <a href="https://www.linkedin.com/company/topcuholding" target="_blank" title="Linkedin">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 custom-sm-margin-top">
+                <h2 class="font-weight-bold">
+                    Bizimle İletişime Geçin
+                </h2>
 
-					<div class="contact-form-error alert alert-danger d-none mt-4">
-						<strong>Error!</strong> Mesaj gönderilirken bir hata oluştu.
-						<span class="mail-error-message text-1 d-block"></span>
-					</div>
+                @* @if (Model!=null && Model.IsSuccess == true)
+                {
+                    <div class="alert alert-success">
+                        <strong>Başarılı!</strong> Mesajınız bize ulaşmıştır.
+                    </div>
+                }
+                else
+                {
 
-					<input type="hidden" name="subject" value="Mesajınız alınmıştır." />
-					<div class="row">
-						<div class="form-group col">
-							<div class="custom-input-box">
-								<i class="icon-user icons text-color-primary"></i>
-								<input type="text" value="" data-msg-required="Lütfen isminizi giriniz!" maxlength="100" class="form-control" name="name" placeholder="İsminiz*" required>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<div class="custom-input-box">
-								<i class="icon-envelope icons text-color-primary"></i>
-								<input type="email" value="" data-msg-required="Lütfen e-posta adresinizi giriniz! " data-msg-email="Lütfen geçerli bir e-posta adresi giriniz!." maxlength="100" class="form-control" name="email" placeholder="E-posta Adresiniz*" required>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<div class="custom-input-box">
-								<i class="icon-bubble icons text-color-primary"></i>
-								<textarea maxlength="5000" data-msg-required="Lütfen mesajınızı yazınız!" rows="10" class="form-control" name="message" placeholder="Mesajınız*" required></textarea>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" data-loading-text="Yükleniyor...">
-						</div>
-					</div>
-				</form> *@
-				@* *@
-				
-@* 				<form id="contactForm" class="contact-form custom-contact-form-style-1 form-errors-light" asp-controller="Contact" asp-action="Index" method="post">
-					<div class="mb-3">
-						<label class="form-label">İsim:</label>
-						<input id="Name" asp-for="Name" class="form-control" />
-						<span asp-validation-for="Name" class="text-danger" data-valmsg-for="Name"></span>
-					</div>
+                    <div class="alert alert-danger">
+                        <strong>Başarısız!</strong> Mesajınız bize ulaşmadı şimdilik.
+                    </div>
+                    
+                } *@
 
-					<div class="mb-3">
-						<label class="form-label">E-posta:</label>
-						<input id="Email" asp-for="Email" class="form-control" />
-						<span asp-validation-for="Email" class="text-danger" data-valmsg-for="Email"></span>
-					</div>
+                <form class=" form-errors-light" asp-controller="Contact" asp-action="Index" method="post">
 
-					<div class="mb-3">
-						<label class="form-label">Mesajınız:</label>
-						<textarea id="Message" asp-for="Message" class="form-control" rows="5"></textarea>
-						<span asp-validation-for="Message" class="text-danger" data-valmsg-for="Message"></span>
-					</div>
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
 
-					<input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
-
-					<div class="mb-3">
-						<div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onReCaptchaSuccess"></div>
-						<span class="text-danger">@Html.ValidationMessage("Captcha")</span>
-					</div>
-					<div class="mb-3">
-						<button type="submit" class="btn btn-secondary">Gönder</button>
-					</div>
-				</form>
- *@
-
-				<form class="contact-form custom-contact-form-style-1 form-errors-light" asp-controller="Contact" asp-action="Index" method="post" onreset="resetErrors()" onsubmit="validateForm()">
-					@* <div class="contact-form-success alert alert-success d-none mt-4">
-						<strong>Başarılı!</strong> Mesajınız bize ulaşmıştır.
-					</div>
-
-					<div class="contact-form-error alert alert-danger d-none mt-4">
-						<strong>Hata!</strong> Mesaj gönderilirken bir hata oluştu.
-						<span class="mail-error-message text-1 d-block"></span>
-					</div> *@
-
-					<input type="hidden" name="subject" value="Mesajınız alınmıştır." />
-					<div class="row">
-						<div class="form-group col">
-							<div class="custom-input-box">
-								<i class="icon-user icons text-color-primary"></i>
-								<input id="name" asp-for="Name" type="text"  data-msg-required="Lütfen isminizi giriniz!" minlength="2" maxlength="100" class="form-control" name="name" placeholder="İsminiz*" required>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<div class="custom-input-box">
-								<i class="icon-envelope icons text-color-primary"></i>
-								<input id="email" asp-for="Email" type="email"  data-msg-required="Lütfen e-posta adresinizi giriniz! " data-msg-email="Lütfen geçerli bir e-posta adresi giriniz!." maxlength="50" class="form-control" name="email" placeholder="E-posta Adresiniz*" required>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<div class="custom-input-box">
-								<i class="icon-bubble icons text-color-primary"></i>
-								<textarea id="subject" asp-for="Message" maxlength="500" data-msg-required="Lütfen mesajınızı yazınız!" rows="10" class="form-control" name="message" placeholder="Mesajınız*" required></textarea>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<div class="custom-input-box">
-								<input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
-
-								
-									<div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onReCaptchaSuccess"></div>
-									<span class="text-danger">@Html.ValidationMessage("Captcha")</span>
-								
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col">
-							<input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" data-loading-text="Mesajınız Gönderiliyor...">
-						</div>
-
-						</div>
+                    <input type="hidden" name="subject" value="Mesajınız alınmıştır." />
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="">
+                                <i class="icon-user icons text-color-primary"></i>
+                                <input id="name" asp-for="Name" type="text" data-msg-required="Lütfen isminizi giriniz!" minlength="2" maxlength="100" class="form-control" name="name" placeholder="İsminiz*" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="">
+                                <i class="icon-envelope icons text-color-primary"></i>
+                                <input id="email" asp-for="Email" type="email" data-msg-required="Lütfen e-posta adresinizi giriniz! " data-msg-email="Lütfen geçerli bir e-posta adresi giriniz!." maxlength="50" class="form-control" name="email" placeholder="E-posta Adresiniz*" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="">
+                                <i class="icon-bubble icons text-color-primary"></i>
+                                <textarea id="subject" asp-for="Message" maxlength="500" data-msg-required="Lütfen mesajınızı yazınız!" rows="10" class="form-control" name="message" placeholder="Mesajınız*" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="">
+                                <input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
 
 
-					<div class="row">
-						<div class="form-group col">
-						
-						
-							<div class="contact-form-success alert alert-success d-none mt-4">
-								<strong>Başarılı!</strong> Mesajınız bize ulaşmıştır.
-                                <span class="mail-success-message text-1 d-block"></span>
-							</div>
+                                <div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onReCaptchaSuccess"></div>
+                                <span class="text-danger">@Html.ValidationMessage("Captcha")</span>
 
-							
-						</div>
-					</div>
-				</form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" data-loading-text="Mesajınız Gönderiliyor...">
+                        </div>
+
+                    </div>
 
 
-			</div>
-		</div>
+                    <div class="row">
+                        <div class="form-group col">
+                           
 
-	</div>
+                            @if (TempData["FormMessage"] != null)
+                            {
+                                @if ((string)TempData["FormMessage"] == "error" )
+                                {
+                                    <div class="">
+                                    <div class="alert alert-danger">
+                                        Mesajınız iletilirken bir hata oluştu!
+                                    </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="">
+                                    <div class="alert alert-success">
+                                        Mesajınız başarıyla iletilmiştir!
+                                    </div>
+                                    </div>
+                                }
+                                
+                            }
+                            
+
+
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
 
 </section>
 <footer id="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 text-center pb-4">
-				<p>2025 ©  Topçu Holding <span class="text-color-light"></span>Tüm hakları Saklıdır</p>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center pb-4">
+                <p>2025 ©  Topçu Holding <span class="text-color-light"></span>Tüm hakları Saklıdır</p>
+            </div>
+        </div>
+    </div>
 </footer>

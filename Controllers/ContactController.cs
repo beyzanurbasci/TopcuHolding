@@ -32,16 +32,22 @@ namespace TopcuHolding.Controllers
             {
                 var mailBody = $"Ad: {model.Name}\nE-posta: {model.Email}\nMesaj:\n{model.Message}";
                 await _email.SendEmailAsync("Yeni İletişim Mesajı", mailBody);
-                ViewBag.Success = true;
-                ModelState.Clear();
 
+                model = new ContactMessage(); // Form temizlensin
+                model.IsSuccess = true;       // 💥 Başarı flag’i set edildi
+
+                TempData["FormMessage"] = "success";
+
+                // ❗️Geldiği sayfaya geri dön
+               
             }
             else
             {
-                return View(model); // validation hataları döner
+                TempData["FormMessage"] = "error";
             }
-
-                return View();
+            //return Ok();
+            return Redirect(Request.Headers["Referer"].ToString());
+            // return View(model); // Hatalıysa tekrar form döner
         }
     }
 }

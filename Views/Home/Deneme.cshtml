@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Deneme";
+}
+
+@model ContactMessage
+<style>
+    #loader-container {
+        position: fixed;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.6);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .loader {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #007bff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<section class="section section-text-light section-background m-0"
+         style="background-color:var(--primary); background-size: cover;">
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <form id="message-form" method="post" enctype="multipart/form-data">
+
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="custom-input-box">
+                                <input type="text" name="Name" class="input-text form-control" placeholder="Ad Soyad" required />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="custom-input-box">
+                                <input type="email" name="Email" class="input-text form-control" placeholder="E-posta" required />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="custom-input-box">
+                                <textarea name="Message" class="input-text form-control contact-message" placeholder="Mesajınız" required></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="custom-input-box">
+                                <input type="hidden" name="RecaptchaToken" id="RecaptchaToken" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="custom-input-box">
+                                <button type="button" id="btn-send-message-form" class="btn btn-primary">Gönder</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", "#btn-send-message-form", function (event) {
+            event.preventDefault();
+            var form = $("#message-form")[0];
+            var data = new FormData(form);
+            $("#btn-send-message-form").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                enctype: "multipart/form-data",
+                url: "/Contact/Index",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: () => {
+                    $("body").append('<div id="loader-container"><div class="loader"></div></div>');
+                },
+                success: function (response) {
+                    if (response.isSuccess) {
+                        toastr.success(response.resultMessage, "Başarılı", {
+                            timeOut: 3000,
+                            progressBar: true,
+                            positionClass: "toast-bottom-right"
+                        });
+                        $(".input-text").val("");
+                        $(".form-label").removeClass("focus");
+                    } else {
+                        toastr.error(response.resultMessage, "Hata", {
+                            timeOut: 3000,
+                            progressBar: true,
+                            positionClass: "toast-bottom-right"
+                        });
+                    }
+                    $("#btn-send-message-form").prop("disabled", false);
+                },
+                error: function () {
+                    toastr.error("Sunucu hatası oluştu.", "Hata");
+                    $("#btn-send-message-form").prop("disabled", false);
+                },
+                complete: () => {
+                    $("#loader-container").remove();
+                },
+            });
+        });
+
+        $(document).on("input", ".contact-message", function () {
+            $(this).val($(this).val().replace(/^\s+/, ""));
+        });
+    });
+</script>
+
+

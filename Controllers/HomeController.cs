@@ -24,6 +24,10 @@ namespace TopcuHolding2.Controllers
         {
             return View();
         }
+        public IActionResult Deneme()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

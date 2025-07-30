@@ -15,6 +15,8 @@ namespace TopcuHolding.Models
 
         // reCAPTCHA token backend'de kullanıldığı için validasyona gerek yok
         public string RecaptchaToken { get; set; }
+        public bool IsSuccess { get; set; }  // EKLENDİ
+
     }
 
 }
