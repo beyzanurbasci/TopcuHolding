@@ -6,10 +6,12 @@
 
 }
 
+<script src="~/assets/js/rules.js"></script>
 
 
 
-<section class="section section-text-light section-background m-0"
+
+<section id="iletisimFormu" class="section section-text-light section-background m-0"
          style="background-color:var(--primary); background-size: cover;">
     @*background: url('@Url.Content("~/assets/img/topcu-holding/topcu-holding-cover-1.png")');
 		optionally you can use a background color instead of an image *@
@@ -106,7 +108,7 @@
                     
                 } *@
 
-                <form class=" form-errors-light" asp-controller="Contact" asp-action="Index" method="post">
+                <form id="contactForm" class=" form-errors-light" asp-controller="Contact" asp-action="SendMail" method="post">
 
                     <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
 
@@ -131,31 +133,55 @@
                         <div class="form-group col">
                             <div class="">
                                 <i class="icon-bubble icons text-color-primary"></i>
-                                <textarea id="subject" asp-for="Message" maxlength="500" data-msg-required="Lütfen mesajınızı yazınız!" rows="10" class="form-control" name="message" placeholder="Mesajınız*" required></textarea>
+                                <textarea id="subject" asp-for="Message" maxlength="500" data-msg-required="Lütfen mesajınızı yazınız!" rows="4" class="form-control" name="message" placeholder="Mesajınız*" required></textarea>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                   @*  <div class="row">
                         <div class="form-group col">
                             <div class="">
+
                                 <input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
 
 
                                 <div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onReCaptchaSuccess"></div>
                                 <span class="text-danger">@Html.ValidationMessage("Captcha")</span>
+                                <div class="form-group col">
+                                    <input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" data-loading-text="Mesajınız Gönderiliyor...">
+                                </div>
+                            </div>
+                        </div>
+                    </div> *@
+                    <div class="row">
+                        <div class="form-group col">
+                            <div class="d-flex  align-items-center flex-wrap gap-2">
+                              
+                                <!-- reCAPTCHA -->
+                                <div class="me-3">
+                                    <div class="g-recaptcha" data-sitekey="@siteKey" data-callback="onReCaptchaSuccess"></div>
+                                    <input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
+                                    <span class="text-danger">@Html.ValidationMessage("Captcha")</span>
+
+                                </div>
+
+                       
+                                <!-- Submit Button -->
+                                <div class="me-0">
+                                    <input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" >
+                                </div>
 
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+
+                    @* <div class="row">
                         <div class="form-group col">
-                            <input type="submit" value="Gönder" class="btn btn-outline custom-border-width btn-secondary custom-border-radius font-weight-semibold text-uppercase" data-loading-text="Mesajınız Gönderiliyor...">
                         </div>
 
-                    </div>
+                    </div> *@
 
 
-                    <div class="row">
+                    @*                     <div class="row">
                         <div class="form-group col">
                            
 
@@ -184,13 +210,15 @@
 
                         </div>
                     </div>
+ *@
                 </form>
 
-
             </div>
+
         </div>
 
     </div>
+
 
 </section>
 <footer id="footer">

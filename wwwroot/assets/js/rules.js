@@ -1,71 +1,76 @@
-﻿//function validateForm() {
-//    const name = document.getElementById("name").value;
-//    const addr = document.getElementById("address").value;
-//    const email = document.getElementById("email").value;
-//    const pass = document.getElementById("password").value;
-//    const sub = document.getElementById("subject").value;
-//    const agree = document.getElementById("agree").checked;
+﻿document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm");
+    const submitButton = form.querySelector('input[type="submit"]');
 
-//    const nameErr = document.getElementById("name-error");
-//    const addrErr = document.getElementById("address-error");
-//    const emailErr = document.getElementById("email-error");
-//    const passErr = document.getElementById("password-error");
-//    const subErr = document.getElementById("subject-error");
-//    const agreeErr = document.getElementById("agree-error");
+    // Önlem: Eğer daha önce event eklenmişse, tekrar eklenmesin
+    if (form.hasAttribute("data-listener-attached")) return;
+    form.setAttribute("data-listener-attached", "true");
 
-//    nameErr.textContent = "";
-//    addrErr.textContent = "";
-//    emailErr.textContent = "";
-//    passErr.textContent = "";
-//    subErr.textContent = "";
-//    agreeErr.textContent = "";
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Sayfanın doğal submit'ini engeller
+        submitButton.enabled = true;
+        submitButton.blur(); // 👈 Bu satır görünmeyen "donukluk" sorununu çözer
 
-//    let isValid = true;
+        if (!validateForm()) return;
 
-//    if (name === "" || /\d/.test(name)) {
-//        nameErr.textContent = "Please enter your name properly.";
-//        isValid = false;
-//    }
+        const formData = new FormData(form);
 
-//    if (addr === "") {
-//        addrErr.textContent = "Please enter your address.";
-//        isValid = false;
-//    }
+        fetch(form.action, {
+            method: "POST",
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Mesajınız başarıyla gönderildi.");
+                    form.reset();
+                    grecaptcha.reset(); // varsa reCAPTCHA sıfırlansın
+                } else {
+                    alert("Mesaj gönderilirken bir hata oluştu.");
+                }
+                submitButton.blur(); // 👈 Bu satır görünmeyen "donukluk" sorununu çözer
 
-//    if (email === "" || !email.includes("@") || !email.includes(".")) {
-//        emailErr.textContent = "Please enter a valid email address.";
-//        isValid = false;
-//    }
+                submitButton.enabled = true;
 
-//    if (pass === "" || pass.length < 6) {
-//        passErr.textContent = "Please enter a password with at least 6 characters.";
-//        isValid = false;
-//    }
+               
+            })
+            .catch(error => {
+                console.error("Hata:", error);
+                alert("Beklenmedik bir hata oluştu.");
+                submitButton.enabled = true;
+                submitButton.blur(); // 👈 Bu satır görünmeyen "donukluk" sorununu çözer
 
-//    if (sub === "") {
-//        subErr.textContent = "Please select your course.";
-//        isValid = false;
-//    }
+            });
+    });
 
-//    if (!agree) {
-//        agreeErr.textContent = "Please agree to the above information.";
-//        isValid = false;
-//    }
+    function validateForm() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("subject").value.trim();
+        const token = document.getElementById("RecaptchaToken").value;
 
-//    if (isValid) {
-//        alert("Form submitted successfully!");
-//        return true;
-//    }
-//    else {
-//        return false;
-//    }
-//}
+        const regexName = /^[a-zA-ZçğıöşüÇĞİÖŞÜ\s]{3,}$/;
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-//function resetErrors() {
-//    document.getElementById("name-error").textContent = "";
-//    document.getElementById("address-error").textContent = "";
-//    document.getElementById("email-error").textContent = "";
-//    document.getElementById("password-error").textContent = "";
-//    document.getElementById("subject-error").textContent = "";
-//    document.getElementById("agree-error").textContent = "";
-//}
+        if (!regexName.test(name)) {
+            alert("Lütfen geçerli bir isim giriniz.");
+            return false;
+        }
+
+        if (!regexEmail.test(email)) {
+            alert("Geçerli bir e-posta adresi giriniz.");
+            return false;
+        }
+
+        if (message.length < 10) {
+            alert("Mesajınız en az 10 karakter olmalıdır.");
+            return false;
+        }
+
+        if (!token) {
+            alert("Lütfen reCAPTCHA doğrulamasını tamamlayınız.");
+            return false;
+        }
+
+        return true;
+    }
+});

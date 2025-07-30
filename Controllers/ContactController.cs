@@ -25,7 +25,7 @@ namespace TopcuHolding.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Index(ContactMessage model)
+        public async Task<IActionResult> SendMail(ContactMessage model)
         {
             if (!await _recaptcha.VerifyAsync(model.RecaptchaToken))
                 ModelState.AddModelError("", "reCAPTCHA doğrulaması başarısız.");
@@ -47,8 +47,8 @@ namespace TopcuHolding.Controllers
             {
                 TempData["FormMessage"] = "error";
             }
-            //return Ok();
-            return Redirect(Request.Headers["Referer"].ToString());
+            return Ok();
+                      //  return Redirect(Request.Headers["Referer"].ToString());
             // return View(model); // Hatalıysa tekrar form döner
         }
     }
