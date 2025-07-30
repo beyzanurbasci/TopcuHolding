@@ -42,6 +42,10 @@ namespace TopcuHolding.Controllers // NOT: Burada proje adýn neyse onunla eþleþm
         {
             return View();
         }
+        public IActionResult Deneme()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
